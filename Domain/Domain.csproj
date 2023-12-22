@@ -16,6 +16,10 @@
       <PackageReference Include="NetEscapades.EnumGenerators" Version="1.0.0-beta08" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Repository\" />
+    </ItemGroup>
+
 
 
 </Project>

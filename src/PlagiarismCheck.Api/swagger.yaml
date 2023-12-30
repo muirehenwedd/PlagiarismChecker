@@ -1,0 +1,615 @@
+﻿openapi: 3.0.0
+info:
+  title: identity
+  version: '1.0'
+tags:
+  - name: admin
+    description: manage 'base files' - files, content of which will be considered plagiarized, if found in student files.
+
+  - name: assignments
+    description: manage assignments, upload assignment files, run assignment
+
+  - name: identity
+    description: identity related endpoints
+
+paths:
+  /admin/files:
+    post:
+      operationId: UploadBaseFile
+      tags:
+        - admin
+      requestBody:
+        $ref: '#/components/requestBodies/UploadFileBody'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseFileDto'
+    get:
+      operationId: GetAllBaseFiles
+      tags:
+        - admin
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseFileDto'
+  /admin/files/{name}:
+    delete:
+      operationId: DeleteBaseFileByName
+      tags:
+        - admin
+      parameters:
+        - name: name
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        '404':
+          $ref: '#/components/responses/BaseFileNotFound'
+  /admin/files/{fileId}:
+    delete:
+      operationId: DeleteBaseFileById
+      tags:
+        - admin
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Success
+        '404':
+          $ref: '#/components/responses/BaseFileNotFound'
+  /assignments:
+    post:
+      operationId: CreateAssignment
+      tags:
+        - assignments
+      requestBody:
+        $ref: '#/components/requestBodies/CreateAssignmentBody'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDto'
+        '409':
+          $ref: '#/components/responses/AssignmentAlreadyCreated'
+    get:
+      operationId: GetAllAssignments
+      tags:
+        - assignments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssignmentDto'
+  /assignments/{assignmentId}/files:
+    post:
+      operationId: UploadAssignmentFile
+      tags:
+        - assignments
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        $ref: '#/components/requestBodies/UploadFileBody'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentFileDto'
+        '404':
+          $ref: '#/components/responses/AssignmentNotFound'
+        '403':
+          $ref: '#/components/responses/AssignmentAccessDenied'
+  /assignments/{assignmentId}/files/{assignmentFileId}:
+    get:
+      operationId: GetAssignmentFile
+      tags:
+        - assignments
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: assignmentFileId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+                # todo: handle binary response
+        '403':
+          $ref: '#/components/responses/AssignmentAccessDenied'
+        '404':
+          description: Assignment with such ID was not found OR Assignment file with such ID was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+              examples:
+                AssignmentNotFound:
+                  value:
+                    type: asdf
+                AssignmentFileNotFound:
+                  value:
+                    type: asdf
+    delete:
+      operationId: DeleteAssignmentFile
+      tags:
+        - assignments
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+        - name: assignmentFileId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Success
+        '404':
+          description: Assignment with such ID was not found OR Assignment file with such ID was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+              examples:
+                AssignmentNotFound:
+                  value:
+                    type: asdf
+                AssignmentFileNotFound:
+                  value:
+                    type: asdf
+  /assignments/{assignmentId}:
+    get:
+      operationId: GetAssignment
+      tags:
+        - assignments
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDto'
+        '404':
+          $ref: "#/components/responses/AssignmentNotFound"
+        '403':
+          $ref: "#/components/responses/AssignmentAccessDenied"
+    delete:
+      operationId: DeleteAssignment
+      tags:
+        - assignments
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Success
+        '404':
+          $ref: "#/components/responses/AssignmentNotFound"
+        '403':
+          $ref: "#/components/responses/AssignmentAccessDenied"
+  /assignments/{assignmentId}/check:
+    get:
+      operationId: CheckForPlagiarism
+      tags:
+        - assignments
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlagiarismCheckResult'
+        '404':
+          $ref: "#/components/responses/AssignmentNotFound"
+        '403':
+          $ref: "#/components/responses/AssignmentAccessDenied"
+  /register:
+    post:
+      tags:
+        - identity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/HttpValidationProblemDetails'
+  /login:
+    post:
+      tags:
+        - identity
+      parameters:
+        - name: useCookies
+          in: query
+          style: form
+          schema:
+            type: boolean
+        - name: useSessionCookies
+          in: query
+          style: form
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokenResponse'
+  /refresh:
+    post:
+      tags:
+        - identity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokenResponse'
+
+components:
+  requestBodies:
+    CreateAssignmentBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              assignmentName:
+                type: string
+                description: name of new assignment
+    UploadFileBody:
+      content:
+        multipart/form-data:
+          schema:
+            required:
+              - FormFileCollection
+            type: object
+            properties:
+              FormFileCollection:
+                type: array
+                items:
+                  type: string
+                  format: binary
+          encoding:
+            FormFileCollection:
+              style: form
+  
+  schemas:
+    ProblemDetails: 
+      $ref: 'https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/schemas/ProblemDetails'
+    AccessTokenResponse:
+      type: object
+      properties:
+        tokenType:
+          type: string
+          nullable: true
+          readOnly: true
+        accessToken:
+          type: string
+          nullable: true
+        expiresIn:
+          type: integer
+          format: int64
+        refreshToken:
+          type: string
+          nullable: true
+      additionalProperties: false
+    HttpValidationProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          nullable: true
+      additionalProperties: { }
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        twoFactorCode:
+          type: string
+          nullable: true
+        twoFactorRecoveryCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RefreshRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    BaseFileDto:
+      description: represents a base file
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: unique identifier of the base file
+        
+        name:
+          type: string
+          description: name of file
+          example: "google_results_collected.txt"
+    
+    AssignmentFileDto:
+      description: represents a file, associated with the assignment
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: unique identifier of the file
+
+        name:
+          type: string
+          description: name of file
+          example: "file1.docx"
+    
+    AssignmentDto:
+      description: represents assignment
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: unique identifier of the assignment
+        
+        assignmentName:
+          type: string
+          description: name of the assignment
+        
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: timestamp of the assignment creation
+        
+        assignmentFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignmentFileDto'
+    
+    MatchDto:
+      type: object
+      properties:
+        documentLeftName:
+          type: string
+        documentRightName:
+          type: string
+        matchingWordPerfect:
+          type: integer
+        matchingWordTotalL:
+          type: integer
+        matchingWordTotalR:
+          type: integer
+        matchingPercentL:
+          type: number
+        matchingPercentR:
+          type: number
+    
+    PlagiarismCheckResult:
+      type: object
+      properties:
+        plagiarismFound:
+          type: boolean
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchDto'
+  
+  responses:
+    BaseFileNotFound:
+      description: Base file with such ID or name was not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            example1:
+              $ref: '#/components/examples/BaseFileNotFoundExample'
+    AssignmentAccessDenied:
+      description: User has no rights to access this assignment
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            example1:
+              $ref: '#/components/examples/AssignmentAccessDeniedExample'
+    AssignmentAlreadyCreated:
+      description: User already created assignment with this name
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            example1:
+              $ref: '#/components/examples/AssignmentAlreadyCreatedExample'
+    AssignmentFileNotFound:
+      description: Assignment file with such ID was not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            example1:
+              $ref: '#/components/examples/AssignmentFileNotFoundExample'
+    AssignmentNotFound:
+      description: Assignment with such ID was not found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            example1:
+              $ref: '#/components/examples/AssignmentNotFoundExample'
+  
+  examples:
+    BaseFileNotFoundExample:
+      value:
+        type: 'https://tools.ietf.org/html/rfc9110#section-15.5.5'
+        title: BaseFileNotFoundException
+        status: 404
+        detail: 'File was not found.'
+        custom-error-code: 204
+    
+    AssignmentAccessDeniedExample:
+      value:
+        type: 'https://tools.ietf.org/html/rfc9110#section-15.5.4'
+        title: AssignmentAccessDeniedException
+        status: 403
+        detail: 'User has no rights to access this assignment.'
+        custom-error-code: 201
+    
+    AssignmentAlreadyCreatedExample:
+      value:
+        type: 'https://tools.ietf.org/html/rfc9110#section-15.5.10'
+        title: AssignmentAlreadyCreatedException
+        status: 409
+        detail: 'Assignment with this name was already created.'
+        custom-error-code: 202
+    
+    AssignmentFileNotFoundExample:
+      value:
+        type: 'https://tools.ietf.org/html/rfc9110#section-15.5.5'
+        title: AssignmentFileNotFoundException
+        status: 404
+        detail: 'Assignment file was not found.'
+        custom-error-code: 205
+    
+    AssignmentNotFoundExample:
+      value:
+        type: 'https://tools.ietf.org/html/rfc9110#section-15.5.5'
+        title: AssignmentNotFoundException
+        status: 404
+        detail: 'Assignment was not found.'
+        custom-error-code: 203

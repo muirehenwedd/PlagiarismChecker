@@ -1,12 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{1A005466-94CA-43C9-9BC0-FD65077AA3E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlagiarismChecker.Domain", "src\PlagiarismChecker.Domain\PlagiarismChecker.Domain.csproj", "{1A005466-94CA-43C9-9BC0-FD65077AA3E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{420C94CC-3588-4556-95DA-C9157FAEC74D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlagiarismChecker.Core", "src\PlagiarismChecker.Core\PlagiarismChecker.Core.csproj", "{420C94CC-3588-4556-95DA-C9157FAEC74D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{2B43684B-AB36-4FCD-BFDC-F055F05B0106}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlagiarismChecker.Infrastructure", "src\PlagiarismChecker.Infrastructure\PlagiarismChecker.Infrastructure.csproj", "{2B43684B-AB36-4FCD-BFDC-F055F05B0106}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{2BCE915C-CD25-497A-893C-5FDEA78E638D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlagiarismCheck.Api", "src\PlagiarismCheck.Api\PlagiarismCheck.Api.csproj", "{2BCE915C-CD25-497A-893C-5FDEA78E638D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Integration", "tests\Tests.Integration\Tests.Integration.csproj", "{E5859D0F-2FCB-4E48-A454-4A7B05338074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit.PlagiarismChecker.Core", "tests\Tests.Unit.PlagiarismChecker.Core\Tests.Unit.PlagiarismChecker.Core.csproj", "{CA5B64B8-B1EA-4529-BA7F-03390FD9C0F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit.PlagiarismChecker.Infrastructure", "tests\Tests.Unit.PlagiarismChecker.Infrastructure\Tests.Unit.PlagiarismChecker.Infrastructure.csproj", "{10A306F9-58AF-4C13-8630-F9BFB857E549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlagiarismCheck.Aspire.AppHost", "src\PlagiarismCheck.Aspire.AppHost\PlagiarismCheck.Aspire.AppHost.csproj", "{15B4F7A4-5915-496E-A4E0-7DF29BE64421}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlagiarismCheck.Aspire.ServiceDefaults", "src\PlagiarismCheck.Aspire.ServiceDefaults\PlagiarismCheck.Aspire.ServiceDefaults.csproj", "{F0FDE798-24EF-4671-BED9-6463B805C47A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +40,25 @@ Global
 		{2BCE915C-CD25-497A-893C-5FDEA78E638D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BCE915C-CD25-497A-893C-5FDEA78E638D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BCE915C-CD25-497A-893C-5FDEA78E638D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5859D0F-2FCB-4E48-A454-4A7B05338074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5859D0F-2FCB-4E48-A454-4A7B05338074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5859D0F-2FCB-4E48-A454-4A7B05338074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5859D0F-2FCB-4E48-A454-4A7B05338074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA5B64B8-B1EA-4529-BA7F-03390FD9C0F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA5B64B8-B1EA-4529-BA7F-03390FD9C0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA5B64B8-B1EA-4529-BA7F-03390FD9C0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA5B64B8-B1EA-4529-BA7F-03390FD9C0F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A306F9-58AF-4C13-8630-F9BFB857E549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A306F9-58AF-4C13-8630-F9BFB857E549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A306F9-58AF-4C13-8630-F9BFB857E549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A306F9-58AF-4C13-8630-F9BFB857E549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B4F7A4-5915-496E-A4E0-7DF29BE64421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B4F7A4-5915-496E-A4E0-7DF29BE64421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B4F7A4-5915-496E-A4E0-7DF29BE64421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B4F7A4-5915-496E-A4E0-7DF29BE64421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FDE798-24EF-4671-BED9-6463B805C47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FDE798-24EF-4671-BED9-6463B805C47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FDE798-24EF-4671-BED9-6463B805C47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FDE798-24EF-4671-BED9-6463B805C47A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

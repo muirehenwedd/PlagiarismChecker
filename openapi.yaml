@@ -6,17 +6,19 @@ info:
   contact:
     name: Maksym Datsenko
     email: muirehenwedd@gmail.com
+    url: https://youtu.be/dQw4w9WgXcQ?si=skyydBvOHv38GFzO
 tags:
   - name: Admin
-    description: manage 'base files' - files, content of which will be considered plagiarized, if found in student files.
+    description: Manage 'base files' - files, content of which will be considered plagiarized, if found in student files.
   - name: Assignments
-    description: manage assignments, upload assignment files, run assignment
+    description: Manage assignments, upload assignment files, run assignment
   - name: Identity
-    description: identity related endpoints
+    description: Identity related endpoints
 paths:
   /admin/files:
     post:
       operationId: UploadBaseFile
+      summary: Upload base file
       tags:
         - Admin
       requestBody:
@@ -30,6 +32,7 @@ paths:
                 $ref: '#/components/schemas/BaseFileDto'
     get:
       operationId: GetAllBaseFiles
+      summary: Get all base files
       tags:
         - Admin
       responses:
@@ -44,6 +47,7 @@ paths:
   /admin/files/{name}:
     delete:
       operationId: DeleteBaseFileByName
+      summary: Delete base file by name
       tags:
         - Admin
       parameters:
@@ -61,6 +65,7 @@ paths:
   /admin/files/{fileId}:
     delete:
       operationId: DeleteBaseFileById
+      description: Delete base file by ID
       tags:
         - Admin
       parameters:
@@ -79,6 +84,7 @@ paths:
   /assignments:
     post:
       operationId: CreateAssignment
+      summary: Create assignment
       tags:
         - Assignments
       requestBody:
@@ -94,6 +100,7 @@ paths:
           $ref: '#/components/responses/AssignmentAlreadyCreated'
     get:
       operationId: GetAllAssignments
+      summary: Get all assignments
       tags:
         - Assignments
       responses:
@@ -108,6 +115,7 @@ paths:
   /assignments/{assignmentId}/files:
     post:
       operationId: UploadAssignmentFile
+      summary: Upload assignment file
       tags:
         - Assignments
       parameters:
@@ -134,6 +142,7 @@ paths:
   /assignments/{assignmentId}/files/{assignmentFileId}:
     get:
       operationId: GetAssignmentFile
+      summary: Get assignment file
       tags:
         - Assignments
       parameters:
@@ -169,13 +178,12 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
               examples:
                 AssignmentNotFound:
-                  value:
-                    type: asdf
+                  $ref: '#/components/examples/AssignmentNotFoundExample'
                 AssignmentFileNotFound:
-                  value:
-                    type: asdf
+                  $ref: '#/components/examples/AssignmentFileNotFoundExample'
     delete:
       operationId: DeleteAssignmentFile
+      summary: Delete assignment file
       tags:
         - Assignments
       parameters:
@@ -204,11 +212,9 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
               examples:
                 AssignmentNotFound:
-                  value:
-                    type: asdf
+                  $ref: '#/components/examples/AssignmentNotFoundExample'
                 AssignmentFileNotFound:
-                  value:
-                    type: asdf
+                  $ref: '#/components/examples/AssignmentFileNotFoundExample'
   /assignments/{assignmentId}:
     get:
       operationId: GetAssignment
@@ -293,7 +299,7 @@ paths:
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/HttpValidationProblemDetails'
+                $ref: '#/components/schemas/ProblemDetails'
   /login:
     post:
       tags:
@@ -416,33 +422,6 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    HttpValidationProblemDetails:
-      type: object
-      properties:
-        type:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        status:
-          type: integer
-          format: int32
-          nullable: true
-        detail:
-          type: string
-          nullable: true
-        instance:
-          type: string
-          nullable: true
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          nullable: true
-      additionalProperties: {}
     LoginRequest:
       type: object
       properties:
@@ -477,7 +456,7 @@ components:
           nullable: true
       additionalProperties: false
     BaseFileDto:
-      description: represents a base file
+      description: Uploaded by the administrator file
       type: object
       properties:
         id:
@@ -489,7 +468,7 @@ components:
           description: name of file
           example: google_results_collected.txt
     AssignmentFileDto:
-      description: represents a file, associated with the assignment
+      description: File, associated with the assignment
       type: object
       properties:
         id:
@@ -501,7 +480,7 @@ components:
           description: name of file
           example: file1.docx
     AssignmentDto:
-      description: represents assignment
+      description: Set of documents, usually grouped by task
       type: object
       properties:
         id:
@@ -520,6 +499,7 @@ components:
           items:
             $ref: '#/components/schemas/AssignmentFileDto'
     MatchDto:
+      description: A pair of documents between which similarities were found
       type: object
       properties:
         documentLeftName:
@@ -528,18 +508,35 @@ components:
           type: string
         matchingWordPerfect:
           type: integer
+          minimum: 0
         matchingWordTotalL:
           type: integer
+          minimum: 0
         matchingWordTotalR:
           type: integer
+          minimum: 0
         matchingPercentL:
           type: number
+          minimum: 0
+          maximum: 100
         matchingPercentR:
           type: number
+          minimum: 0
+          maximum: 100
+      example:
+        documentLeftName: left.txt
+        documentRightName: right.txt
+        matchingWordPerfect: 105
+        matchingWordTotal: 50
+        matchingWordTotalR: 50
+        matchingPercentL: 30
+        matchingPercentR: 20
     PlagiarismCheckResult:
+      description: Plagiarism check operation result
       type: object
       properties:
         plagiarismFound:
+          description: Indicates if plagiarism were found (at least one pair of documents, similarity of which crosses the threshold)
           type: boolean
         matches:
           type: array

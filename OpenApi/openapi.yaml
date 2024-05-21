@@ -67,7 +67,7 @@ paths:
   /admin/files/{fileId}:
     delete:
       operationId: DeleteBaseFileById
-      description: Delete base file by ID
+      summary: Delete base file by ID
       tags:
         - Admin
       parameters:

@@ -15,9 +15,9 @@ jobs:
 
       - name: Install and Build 🔧
         working-directory: OpenApi
-        run: npx @redocly/cli bundle openapi.yaml -o dist/PlagiarismCheckerApi/openapi.yaml
+        run: npx @redocly/cli bundle openapi.yaml -o docs/openapi.yaml
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.6.1
         with:
-          folder: OpenApi/dist
+          folder: OpenApi/docs

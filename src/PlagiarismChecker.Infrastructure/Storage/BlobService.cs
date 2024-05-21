@@ -1,17 +1,20 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Microsoft.Extensions.Options;
 using PlagiarismChecker.Core.Abstractions.Storage;
+using PlagiarismChecker.Infrastructure.Storage.Options;
 
 namespace PlagiarismChecker.Infrastructure.Storage;
 
 internal sealed class BlobService : IBlobService
 {
-    public const string ContainerName = "files"; //todo: move to config.
     private readonly BlobServiceClient _blobServiceClient;
+    private readonly IOptions<BlobOptions> _options;
 
-    public BlobService(BlobServiceClient blobServiceClient)
+    public BlobService(BlobServiceClient blobServiceClient, IOptions<BlobOptions> options)
     {
         _blobServiceClient = blobServiceClient;
+        _options = options;
     }
 
     public async Task<Guid> UploadAsync(
@@ -49,7 +52,7 @@ internal sealed class BlobService : IBlobService
 
     private BlobClient GetBlobClient(Guid blobId)
     {
-        var containerClient = _blobServiceClient.GetBlobContainerClient(ContainerName);
+        var containerClient = _blobServiceClient.GetBlobContainerClient(_options.Value.ContainerName);
         var blobClient = containerClient.GetBlobClient(blobId.ToString());
 
         return blobClient;

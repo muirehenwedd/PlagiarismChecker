@@ -6,7 +6,6 @@ info:
   contact:
     name: Maksym Datsenko
     email: muirehenwedd@gmail.com
-    url: https://youtu.be/dQw4w9WgXcQ?si=skyydBvOHv38GFzO
 tags:
   - name: Admin
     description: Manage 'base files' - files, content of which will be considered plagiarized, if found in student files.

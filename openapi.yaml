@@ -2,19 +2,23 @@ openapi: 3.0.0
 info:
   title: PlagiarismChecker API
   version: '1.0'
+  description: API for checking students works for plagiarism
+  contact:
+    name: Maksym Datsenko
+    email: muirehenwedd@gmail.com
 tags:
-  - name: admin
+  - name: Admin
     description: manage 'base files' - files, content of which will be considered plagiarized, if found in student files.
-  - name: assignments
+  - name: Assignments
     description: manage assignments, upload assignment files, run assignment
-  - name: identity
+  - name: Identity
     description: identity related endpoints
 paths:
   /admin/files:
     post:
       operationId: UploadBaseFile
       tags:
-        - admin
+        - Admin
       requestBody:
         $ref: '#/components/requestBodies/UploadFileBody'
       responses:
@@ -27,7 +31,7 @@ paths:
     get:
       operationId: GetAllBaseFiles
       tags:
-        - admin
+        - Admin
       responses:
         '200':
           description: Success
@@ -41,7 +45,7 @@ paths:
     delete:
       operationId: DeleteBaseFileByName
       tags:
-        - admin
+        - Admin
       parameters:
         - name: name
           in: path
@@ -58,7 +62,7 @@ paths:
     delete:
       operationId: DeleteBaseFileById
       tags:
-        - admin
+        - Admin
       parameters:
         - name: fileId
           in: path
@@ -76,7 +80,7 @@ paths:
     post:
       operationId: CreateAssignment
       tags:
-        - assignments
+        - Assignments
       requestBody:
         $ref: '#/components/requestBodies/CreateAssignmentBody'
       responses:
@@ -91,7 +95,7 @@ paths:
     get:
       operationId: GetAllAssignments
       tags:
-        - assignments
+        - Assignments
       responses:
         '200':
           description: Success
@@ -105,7 +109,7 @@ paths:
     post:
       operationId: UploadAssignmentFile
       tags:
-        - assignments
+        - Assignments
       parameters:
         - name: assignmentId
           in: path
@@ -131,7 +135,7 @@ paths:
     get:
       operationId: GetAssignmentFile
       tags:
-        - assignments
+        - Assignments
       parameters:
         - name: assignmentId
           in: path
@@ -173,7 +177,7 @@ paths:
     delete:
       operationId: DeleteAssignmentFile
       tags:
-        - assignments
+        - Assignments
       parameters:
         - name: assignmentId
           in: path
@@ -209,7 +213,7 @@ paths:
     get:
       operationId: GetAssignment
       tags:
-        - assignments
+        - Assignments
       parameters:
         - name: assignmentId
           in: path
@@ -232,7 +236,7 @@ paths:
     delete:
       operationId: DeleteAssignment
       tags:
-        - assignments
+        - Assignments
       parameters:
         - name: assignmentId
           in: path
@@ -252,7 +256,7 @@ paths:
     get:
       operationId: CheckForPlagiarism
       tags:
-        - assignments
+        - Assignments
       parameters:
         - name: assignmentId
           in: path
@@ -275,7 +279,7 @@ paths:
   /register:
     post:
       tags:
-        - identity
+        - Identity
       requestBody:
         content:
           application/json:
@@ -293,7 +297,7 @@ paths:
   /login:
     post:
       tags:
-        - identity
+        - Identity
       parameters:
         - name: useCookies
           in: query
@@ -320,7 +324,7 @@ paths:
   /refresh:
     post:
       tags:
-        - identity
+        - Identity
       requestBody:
         content:
           application/json:

@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: identity
+  title: PlagiarismChecker API
   version: '1.0'
 tags:
   - name: admin

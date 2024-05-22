@@ -217,6 +217,7 @@ paths:
   /assignments/{assignmentId}:
     get:
       operationId: GetAssignment
+      summary: Get assignment
       tags:
         - Assignments
       parameters:
@@ -240,6 +241,7 @@ paths:
           $ref: '#/components/responses/AssignmentNotFound'
     delete:
       operationId: DeleteAssignment
+      summary: Delete assignment
       tags:
         - Assignments
       parameters:
@@ -260,6 +262,7 @@ paths:
   /assignments/{assignmentId}/check:
     get:
       operationId: CheckForPlagiarism
+      summary: Execute plagiarism check
       tags:
         - Assignments
       parameters:
@@ -283,6 +286,8 @@ paths:
           $ref: '#/components/responses/AssignmentNotFound'
   /register:
     post:
+      operationId: Register
+      summary: Register
       tags:
         - Identity
       requestBody:
@@ -301,6 +306,8 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
   /login:
     post:
+      operationId: Login
+      summary: Login
       tags:
         - Identity
       parameters:
@@ -328,6 +335,8 @@ paths:
                 $ref: '#/components/schemas/AccessTokenResponse'
   /refresh:
     post:
+      operationId: Refresh
+      summary: Refresh token
       tags:
         - Identity
       requestBody:

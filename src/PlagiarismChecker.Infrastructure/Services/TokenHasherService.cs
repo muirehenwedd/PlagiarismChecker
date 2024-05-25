@@ -17,7 +17,8 @@ public sealed class TokenHasherService : ITokenHasherService
     {
         var inputAsBytesSpan = MemoryMarshal.AsBytes(input.AsSpan());
 
-        var hashData = SHA256.HashData(inputAsBytesSpan);
+        Span<byte> hashData = stackalloc byte[MD5.HashSizeInBytes];
+        MD5.TryHashData(inputAsBytesSpan, hashData, out _);
         var longHash = BitConverter.ToInt64(hashData[..8]);
 
         return longHash;

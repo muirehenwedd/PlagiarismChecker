@@ -17,7 +17,7 @@ public sealed class TokenHasherServiceTests
     {
         // Arrange
         string[] tokens = ["word1", "word2"];
-        long[] expectedTokenHashes = [-893216628344711163L, -9169630739182560601L];
+        long[] expectedTokenHashes = [5861610460711951915L, -355452524944164013L];
 
         // Act
         var actualTokenHashes = _sut.HashTokens(tokens);
@@ -31,7 +31,7 @@ public sealed class TokenHasherServiceTests
     {
         // Arrange
         string[] tokens = ["word1"];
-        long[] expectedTokenHashes = [-893216628344711163L];
+        long[] expectedTokenHashes = [5861610460711951915L];
 
         // Act
 

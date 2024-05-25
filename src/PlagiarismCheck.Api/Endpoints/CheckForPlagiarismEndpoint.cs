@@ -13,16 +13,28 @@ public sealed class CheckForPlagiarismEndpoint : IEndpoint<CheckForPlagiarismEnd
     public static string Route => "/assignments/{assignmentId}/check";
 
     public sealed record Parameters(
-        [FromRoute] Guid AssignmentId,
         ClaimsPrincipal User,
+        [FromRoute] Guid AssignmentId,
+        [FromQuery] int? MismatchTolerance,
+        [FromQuery] int? MismatchPercentage,
+        [FromQuery] int? PhraseLength,
+        [FromQuery] int? WordThreshold,
         [FromServices] ISender Sender
     );
 
     public static async Task<IResult> HandleAsync(Parameters parameters)
     {
-        var (assignmentId, user, sender) = parameters;
+        var (user, assignmentId, mismatchTolerance, mismatchPercentage, phraseLength, wordThreshold, sender) =
+            parameters;
 
-        var result = await sender.Send(new CheckForPlagiarismQuery(user, assignmentId));
+        var query = new CheckForPlagiarismQuery(user,
+            assignmentId,
+            mismatchTolerance,
+            mismatchPercentage,
+            phraseLength,
+            wordThreshold);
+
+        var result = await sender.Send(query);
 
         return TypedResults.Json(result);
     }

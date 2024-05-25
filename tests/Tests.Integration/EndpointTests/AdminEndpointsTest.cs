@@ -61,7 +61,7 @@ public class AdminEndpointsTest : IClassFixture<ApiFactory>
         var response = await _client.DeleteAsync($"/admin/files/{baseFile!.Id}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
     
     [Fact]
@@ -87,7 +87,7 @@ public class AdminEndpointsTest : IClassFixture<ApiFactory>
         var response = await _client.DeleteAsync($"/admin/files/{baseFile!.Name}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     private record UploadBaseFileResponse(Guid Id, string Name);

@@ -9,14 +9,11 @@ namespace PlagiarismChecker.Infrastructure.Services;
 
 public sealed class DocumentComparerService : IDocumentComparerService
 {
-    private readonly IOptions<PlagiarismCheckOptions> _options;
-
-    public DocumentComparerService(IOptions<PlagiarismCheckOptions> options)
-    {
-        _options = options;
-    }
-
-    public DocumentComparisonResult Compare(Document docL, Document docR)
+    public DocumentComparisonResult Compare(
+        Document docL,
+        Document docR,
+        DocumentComparisonParameters comparisonParameters
+    )
     {
         int matching;
 
@@ -162,7 +159,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                     // last perfectlymatching word in left document and right document
                     var matchingWordsPerfectWithinPhrase = lastLp - firstLp + 1; // save number of perfect matches
                     // count of perfect matches within a single phrase
-                    if (_options.Value.MismatchTolerance > 0) // are we accepting imperfect matches?
+                    if (comparisonParameters.MismatchTolerance > 0) // are we accepting imperfect matches?
                     {
                         var firstLx = firstLp; // save pointer to word before first perfect match left
                         var firstRx = firstRp; // save pointer to word before first perfect match right
@@ -194,7 +191,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
 
                             // we're at a flaw, so increase the flaw count
                             flaws++;
-                            if (flaws > _options.Value.MismatchTolerance) break; // check for maximum flaws reached
+                            if (flaws > comparisonParameters.MismatchTolerance) break; // check for maximum flaws reached
 
                             if (firstL - 1 >= 0) // check one word earlier on left (if it exists)
                             {
@@ -211,7 +208,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                                         matchingWordsPerfectWithinPhrase + 1
                                     );
 
-                                    if (matching < _options.Value.MismatchPercentage)
+                                    if (matching < comparisonParameters.MismatchPercentage)
                                     {
                                         break; // are we getting too imperfect?
                                     }
@@ -245,7 +242,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                                 {
                                     if (CalculateMismatchPercent(firstL, firstR - 1, lastLx, lastRx,
                                             matchingWordsPerfectWithinPhrase + 1) <
-                                        _options.Value.MismatchPercentage) break; // are we getting too imperfect?
+                                        comparisonParameters.MismatchPercentage) break; // are we getting too imperfect?
                                     matchMarkTempR[firstR] =
                                         WordMarker.WordFlaw; // markup non-matching word in right temporary list
                                     firstR--; // move up on right to skip over the flaw
@@ -265,7 +262,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
 
                             if (CalculateMismatchPercent(firstL - 1, firstR - 1, lastLx, lastRx,
                                     matchingWordsPerfectWithinPhrase) <
-                                _options.Value.MismatchPercentage) break; // are we getting too imperfect?
+                                comparisonParameters.MismatchPercentage) break; // are we getting too imperfect?
                             matchMarkTempL[firstL] = WordMarker.WordFlaw; // markup word in left temporary list
                             matchMarkTempR[firstR] = WordMarker.WordFlaw; // markup word in right temporary list
                             firstL--; // move up on left
@@ -295,7 +292,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                             }
 
                             flaws++;
-                            if (flaws == _options.Value.MismatchTolerance) break; // check for maximum flaws reached
+                            if (flaws == comparisonParameters.MismatchTolerance) break; // check for maximum flaws reached
 
                             if (lastL + 1 < docL.WordsCount) // check one word later on left (if it exists)
                             {
@@ -312,7 +309,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                                         matchingWordsPerfectWithinPhrase + 1
                                     );
 
-                                    if (matching < _options.Value.MismatchPercentage)
+                                    if (matching < comparisonParameters.MismatchPercentage)
                                         break; // are we getting too imperfect?
 
                                     // markup non-matching word in left temporary list
@@ -347,7 +344,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                                         matchingWordsPerfectWithinPhrase + 1
                                     );
 
-                                    if (matching < _options.Value.MismatchPercentage) // are we getting too imperfect?
+                                    if (matching < comparisonParameters.MismatchPercentage) // are we getting too imperfect?
                                     {
                                         break;
                                     }
@@ -382,7 +379,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                                 matchingWordsPerfectWithinPhrase
                             );
 
-                            if (matching < _options.Value.MismatchPercentage)
+                            if (matching < comparisonParameters.MismatchPercentage)
                             {
                                 break;
                             }
@@ -394,7 +391,7 @@ public sealed class DocumentComparerService : IDocumentComparerService
                     }
 
                     // check that phrase has enough perfect matches in it to mark
-                    if (matchingWordsPerfectWithinPhrase >= _options.Value.PhraseLength)
+                    if (matchingWordsPerfectWithinPhrase >= comparisonParameters.PhraseLength)
                     {
                         anchor++; // increment anchor count
                         for (var i = firstLp; i <= lastLp; i++) // loop for all left matched words
@@ -433,13 +430,15 @@ public sealed class DocumentComparerService : IDocumentComparerService
         {
             DocumentL = docL,
             DocumentR = docR,
-            MatchingWordsPerfect = matchingWordsPerfect,
-            MatchingWordsTotalL = matchingWordsTotalL,
-            MatchingWordsTotalR = matchingWordsTotalR,
-            WordMarkersL = matchMarkL,
-            WordMarkersR = matchMarkR,
-            MatchingPercentL = CalculatePercent(docL.WordsCount, matchingWordsTotalL),
-            MatchingPercentR = CalculatePercent(docR.WordsCount, matchingWordsTotalR)
+            PerfectMatch = matchingWordsPerfect,
+            PerfectMatchPercentLeft = CalculatePercent(docL.WordsCount, matchingWordsPerfect),
+            PerfectMatchPercentRight = CalculatePercent(docR.WordsCount, matchingWordsPerfect),
+            OverallMatchCountLeft = matchingWordsTotalL,
+            OverallMatchCountRight = matchingWordsTotalR,
+            WordMarkersLeft = matchMarkL,
+            WordMarkersRight = matchMarkR,
+            OverallMatchPercentLeft = CalculatePercent(docL.WordsCount, matchingWordsTotalL),
+            OverallMatchPercentRight = CalculatePercent(docR.WordsCount, matchingWordsTotalR)
         };
     }
 

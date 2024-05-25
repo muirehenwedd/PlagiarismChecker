@@ -270,13 +270,43 @@ paths:
       tags:
         - Assignments
       parameters:
-        - name: assignmentId
-          in: path
+        - in: path
+          name: assignmentId
           required: true
           style: simple
           schema:
             type: string
             format: uuid
+        - in: query
+          name: mismatchPercentage
+          description: The minimum percentage of perfect matches that a phrase can contain and be considered a match.
+          required: false
+          schema:
+            type: number
+            minimum: 0
+            maximum: 100
+        - in: query
+          name: mismatchTolerance
+          description: The maximum number of non-matches that API will allow between perfectly matching portions of a phrase.
+          required: false
+          schema:
+            type: number
+            minimum: 0
+            maximum: 9
+        - in: query
+          name: phraseLength
+          description: The minimum string length that WCopyfind will consider to be a match. For example, when this parameter is set to 6, WCopyfind will ignore matching phrases that are only 5 words long or less. I recommend leaving this parameter at 6 (words).
+          required: false
+          schema:
+            type: number
+            minimum: 1
+        - in: query
+          name: wordThreshold
+          description: The fewest count of matching words in a pair of documents that will cause API to report a document match in the result.
+          required: false
+          schema:
+            type: number
+            minimum: 1
       responses:
         '200':
           description: Success
@@ -493,35 +523,52 @@ components:
       description: A pair of documents between which similarities were found
       type: object
       properties:
-        documentLeftName:
+        documentNameLeft:
           type: string
-        documentRightName:
+        documentNameRight:
           type: string
-        matchingWordPerfect:
+        perfectMatch:
+          description: Number of perfectly matching words in phrases of at least 'Shortest Phrase to Match' words
           type: integer
           minimum: 0
-        matchingWordTotalL:
-          type: integer
-          minimum: 0
-        matchingWordTotalR:
-          type: integer
-          minimum: 0
-        matchingPercentL:
+        perfectMatchPercentLeft:
+          description: Percentage of words in the Left document that are in perfect matched phrases
           type: number
           minimum: 0
           maximum: 100
-        matchingPercentR:
+        perfectMatchPercentRight:
+          description: Percentage of words in the Left document that are in perfect matched phrases
           type: number
           minimum: 0
           maximum: 100
-      example: 
-        documentLeftName: left.txt
-        documentRightName: right.txt
-        matchingWordPerfect: 105
-        matchingWordTotal: 50
-        matchingWordTotalR: 50 # todo: specify detailed example
-        matchingPercentL: 30
-        matchingPercentR: 20
+        overallMatchCountLeft:
+          description: Number of perfectly and imperfectly matching words in phrases of at least 'Shortest Phrase to Match' words in the Left document
+          type: integer
+          minimum: 0
+        overallMatchCountRight:
+          description: Number of perfectly and imperfectly matching words in phrases of at least 'Shortest Phrase to Match' words in the Right document
+          type: integer
+          minimum: 0
+        overallMatchPercentLeft:
+          description: Percentage of words in the Left document that are in overall match phrases
+          type: number
+          minimum: 0
+          maximum: 100
+        overallMatchPercentRight:
+          description: Percentage of words in the Right document that are in overall match phrases
+          type: number
+          minimum: 0
+          maximum: 100
+      example:
+        documentNameLeft: left.txt
+        documentNameRight: right.txt
+        perfectMatch: 105
+        perfectMatchPercentLeft: 47
+        perfectMatchPercentRight: 99
+        overallMatchCountLeft: 106
+        overallMatchCountRight: 106
+        overallMatchPercentLeft: 47
+        overallMatchPercentRight: 100
         
     PlagiarismCheckResult:
       description: Plagiarism check operation result

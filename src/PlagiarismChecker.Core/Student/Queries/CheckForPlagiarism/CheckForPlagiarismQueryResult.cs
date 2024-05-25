@@ -6,12 +6,14 @@ public sealed record CheckForPlagiarismQueryResult(
 )
 {
     public sealed record Match(
-        string DocumentLeftName,
-        string DocumentRightName,
-        int MatchingWordPerfect,
-        int MatchingWordTotalL,
-        int MatchingWordTotalR,
-        decimal MatchingPercentL,
-        decimal MatchingPercentR
+        string DocumentNameLeft,
+        string DocumentNameRight,
+        int PerfectMatch,
+        decimal PerfectMatchPercentLeft,
+        decimal PerfectMatchPercentRight,
+        int OverallMatchCountLeft,
+        int OverallMatchCountRight,
+        decimal OverallMatchPercentLeft,
+        decimal OverallMatchPercentRight
     );
 }

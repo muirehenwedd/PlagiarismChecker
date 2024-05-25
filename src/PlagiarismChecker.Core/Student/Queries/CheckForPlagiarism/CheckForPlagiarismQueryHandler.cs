@@ -64,22 +64,34 @@ public sealed class CheckForPlagiarismQueryHandler
 
         var matches = new List<CheckForPlagiarismQueryResult.Match>();
 
+        var comparisonParameters = new DocumentComparisonParameters(
+            MismatchPercentage: query.MismatchPercentage ?? _options.Value.MismatchPercentage,
+            MismatchTolerance: query.MismatchTolerance ?? _options.Value.MismatchTolerance,
+            PhraseLength: query.PhraseLength ?? _options.Value.PhraseLength,
+            WordThreshold: query.WordThreshold ?? _options.Value.WordThreshold
+        );
+
         await foreach (var group1Document in baseDocuments)
         {
             foreach (var studentAssignments in assignment.AssignmentFiles)
             {
-                var pairResult = _documentComparerService.Compare(group1Document.Document, studentAssignments.Document);
+                var pairResult = _documentComparerService.Compare(
+                    group1Document.Document,
+                    studentAssignments.Document,
+                    comparisonParameters);
 
-                if (pairResult.MatchingWordsPerfect > _options.Value.WordThreshold)
+                if (pairResult.PerfectMatch > comparisonParameters.WordThreshold)
                 {
                     var match = new CheckForPlagiarismQueryResult.Match(
-                        DocumentLeftName: group1Document.FileName,
-                        DocumentRightName: studentAssignments.FileName,
-                        MatchingWordPerfect: pairResult.MatchingWordsPerfect,
-                        MatchingWordTotalL: pairResult.MatchingWordsTotalL,
-                        MatchingWordTotalR: pairResult.MatchingWordsTotalR,
-                        MatchingPercentL: pairResult.MatchingPercentL,
-                        MatchingPercentR: pairResult.MatchingPercentR
+                        DocumentNameLeft: group1Document.FileName,
+                        DocumentNameRight: studentAssignments.FileName,
+                        PerfectMatch: pairResult.PerfectMatch,
+                        PerfectMatchPercentLeft: pairResult.PerfectMatchPercentLeft,
+                        PerfectMatchPercentRight: pairResult.PerfectMatchPercentRight,
+                        OverallMatchCountLeft: pairResult.OverallMatchCountLeft,
+                        OverallMatchCountRight: pairResult.OverallMatchCountRight,
+                        OverallMatchPercentLeft: pairResult.OverallMatchPercentLeft,
+                        OverallMatchPercentRight: pairResult.OverallMatchPercentRight
                     );
 
                     matches.Add(match);

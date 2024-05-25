@@ -114,7 +114,7 @@ public class StudentEndpointsTest : IClassFixture<ApiFactory>
         var response = await _client.DeleteAsync($"assignments/{createAssignmentResult!.Id}");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Fact]

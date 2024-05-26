@@ -17,7 +17,6 @@ public static class DataConfigurationExtensions
             }, ServiceLifetime.Transient);
 
         serviceCollection.AddTransient<IApplicationDbContext>(static p => p.GetRequiredService<ApplicationDbContext>());
-        serviceCollection.AddScoped<IApplicationDbContextFactory, ApplicationDbContextFactory>();
 
         return serviceCollection;
     }

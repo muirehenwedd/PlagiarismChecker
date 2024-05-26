@@ -10,4 +10,6 @@ public sealed partial class AssignmentFileMapper : IAssignmentFileMapper
 {
     [MapProperty(nameof(AssignmentFile.FileName), nameof(AssignmentFileDto.Name))]
     public partial AssignmentFileDto ToDto(AssignmentFile from);
+
+    private static Guid ToGuid(AssignmentFileId id) => id.Value;
 }

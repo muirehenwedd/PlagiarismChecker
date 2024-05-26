@@ -26,4 +26,6 @@ public partial class AssignmentMapper : IAssignmentMapper
     {
         return _assignmentFileMapper.ToDto(from);
     }
+
+    private static Guid ToGuid(AssignmentId id) => id.Value;
 }

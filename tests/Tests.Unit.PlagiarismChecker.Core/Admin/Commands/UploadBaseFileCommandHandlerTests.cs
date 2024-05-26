@@ -49,7 +49,7 @@ public class UploadBaseFileCommandHandlerTests
     {
         // Arrange
         var generated = _baseFileFaker.Generate();
-        var blobFileId = Guid.NewGuid();
+        var blobFileId = BlobFileId.New();
         _blobService.UploadAsync(_fakeFileStream, generated.FileName).Returns(Task.FromResult(blobFileId));
 
         var contentType = MediaTypeNames.Text.Plain;
@@ -101,7 +101,7 @@ public class UploadBaseFileCommandHandlerTests
     {
         // Arrange
         var generated = _baseFileFaker.Generate();
-        var blobFileId = Guid.NewGuid();
+        var blobFileId = BlobFileId.New();
 
         _blobService.UploadAsync(_fakeFileStream, generated.FileName).Returns(Task.FromResult(blobFileId));
 

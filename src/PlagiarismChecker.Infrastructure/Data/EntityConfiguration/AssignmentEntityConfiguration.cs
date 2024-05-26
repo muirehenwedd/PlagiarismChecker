@@ -4,12 +4,17 @@ using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismChecker.Infrastructure.Data.EntityConfiguration;
 
-public sealed class StudentAssignmentEntityConfiguration : IEntityTypeConfiguration<Assignment>
+public sealed class AssignmentEntityConfiguration : IEntityTypeConfiguration<Assignment>
 {
     public void Configure(EntityTypeBuilder<Assignment> builder)
     {
         builder
             .HasKey(e => e.Id);
+
+        builder
+            .Property(e => e.Id)
+            .HasConversion<AssignmentId.EfCoreValueConverter>()
+            .IsRequired();
 
         builder
             .Property(e => e.OwnerId)

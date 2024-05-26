@@ -1,4 +1,6 @@
-﻿namespace PlagiarismChecker.Domain.Entities;
+﻿using StronglyTypedIds;
 
-[StronglyTypedId(jsonConverter: StronglyTypedIdJsonConverter.SystemTextJson)]
+namespace PlagiarismChecker.Domain.Entities;
+
+[StronglyTypedId]
 public partial struct AssignmentId;

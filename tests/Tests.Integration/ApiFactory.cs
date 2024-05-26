@@ -40,7 +40,7 @@ public sealed class ApiFactory : WebApplicationFactory<IApiMarker>, IAsyncLifeti
                 {"Auth:Jwt:TtlSeconds", "3600"},
                 {"Auth:Jwt:Secret", new string('a', 256)},
 
-                {"ConnectionStrings:Postgres", _dbContainer.GetConnectionString()},
+                {"ConnectionStrings:Postgres", $"{_dbContainer.GetConnectionString()};Include Error Detail=true;"},
                 {"ConnectionStrings:BlobStorage", _blobStorageContainer.GetConnectionString()},
 
                 {"BlobStorage", "files"},

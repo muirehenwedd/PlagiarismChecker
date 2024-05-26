@@ -3,4 +3,4 @@
 namespace PlagiarismChecker.Domain.Entities;
 
 [StronglyTypedId]
-public partial struct AssignmentFileId;
+public partial struct BlobFileId;

@@ -27,8 +27,8 @@ public class StudentEndpointsTest : IClassFixture<ApiFactory>
 
         var loginResponse = _client.PostAsJsonAsync("login", new
         {
-            password = "Stalker22!",
-            email = "testuser@email.com"
+            email = "testuser@email.com",
+            password = "Stalker22!"
         }).Result;
 
         var testUserJwt = loginResponse.Content.ReadFromJsonAsync<LoginResult>().Result!.AccessToken;

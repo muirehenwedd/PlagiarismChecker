@@ -12,9 +12,10 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="FluentValidation" Version="11.9.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.4" />
-      <PackageReference Include="StronglyTypedId" Version="0.2.1" />
+      <PackageReference Include="StronglyTypedId" Version="1.0.0-beta08" />
+      <PackageReference Include="StronglyTypedId.Templates" Version="1.0.0-beta08" />
     </ItemGroup>
 
 

@@ -33,6 +33,7 @@ public sealed class UploadBaseFileCommandHandler
 
         var newFile = new BaseFile
         {
+            Id = BaseFileId.New(),
             FileName = command.FileName,
             BlobFileId = blobId
         };

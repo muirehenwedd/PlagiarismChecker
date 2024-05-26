@@ -14,17 +14,14 @@ public sealed class CheckForPlagiarismQueryHandler
     : IQueryHandler<CheckForPlagiarismQuery, CheckForPlagiarismQueryResult>
 {
     private readonly IApplicationDbContext _dbContext;
-    private readonly IDocumentComparerService _documentComparerService;
     private readonly IOptions<PlagiarismCheckOptions> _options;
 
     public CheckForPlagiarismQueryHandler(
         IApplicationDbContext dbContext,
-        IDocumentComparerService documentComparerService,
         IOptions<PlagiarismCheckOptions> options
     )
     {
         _dbContext = dbContext;
-        _documentComparerService = documentComparerService;
         _options = options;
     }
 
@@ -50,14 +47,14 @@ public sealed class CheckForPlagiarismQueryHandler
         var allBaseFilesDocuments = _dbContext
             .BaseFiles
             .AsNoTracking()
-            .Select(file => new {file.Document, file.FileName})
+            .Select(file => new {file.Document, FileName = file.Name})
             .AsAsyncEnumerable();
 
         var otherStudentDocuments = _dbContext
             .AssignmentFiles
             .AsNoTracking()
             .Where(af => af.Assignment.OwnerId != userId)
-            .Select(file => new {file.Document, file.FileName})
+            .Select(file => new {file.Document, FileName = file.Name})
             .AsAsyncEnumerable();
 
         var baseDocuments = allBaseFilesDocuments.Concat(otherStudentDocuments);
@@ -73,18 +70,15 @@ public sealed class CheckForPlagiarismQueryHandler
 
         await foreach (var group1Document in baseDocuments)
         {
-            foreach (var studentAssignments in assignment.AssignmentFiles)
+            foreach (var assignmentFile in assignment.AssignmentFiles)
             {
-                var pairResult = _documentComparerService.Compare(
-                    group1Document.Document,
-                    studentAssignments.Document,
-                    comparisonParameters);
+                var pairResult = group1Document.Document.Compare(assignmentFile.Document, comparisonParameters);
 
                 if (pairResult.PerfectMatch > comparisonParameters.WordThreshold)
                 {
                     var match = new CheckForPlagiarismQueryResult.Match(
                         DocumentNameLeft: group1Document.FileName,
-                        DocumentNameRight: studentAssignments.FileName,
+                        DocumentNameRight: assignmentFile.Name,
                         PerfectMatch: pairResult.PerfectMatch,
                         PerfectMatchPercentLeft: pairResult.PerfectMatchPercentLeft,
                         PerfectMatchPercentRight: pairResult.PerfectMatchPercentRight,

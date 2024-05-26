@@ -7,20 +7,18 @@ using PlagiarismChecker.Core.Admin.Queries.GetAllTrustedFiles;
 using PlagiarismChecker.Domain.Entities;
 using PlagiarismChecker.Domain.Repository;
 using PlagiarismChecker.Infrastructure.Data;
+using Tests.Unit.PlagiarismChecker.Core.__Utils;
 
 namespace Tests.Unit.PlagiarismChecker.Core.Admin.Queries;
 
 public class GetAllBaseFilesQueryHandlerTests
 {
-    private readonly Faker<BaseFile> _baseFileFaker = new Faker<BaseFile>()
-        .RuleFor(x => x.Id, x => BaseFileId.New())
-        .RuleFor(x => x.FileName, x => x.System.FileName("txt"))
-        .UseSeed(8);
-
+    private readonly Faker<BaseFile> _baseFileFaker;
     private readonly IApplicationDbContext _dbContextSubstitute;
 
     public GetAllBaseFilesQueryHandlerTests()
     {
+        _baseFileFaker = BaseFileFaker.Create();
         _dbContextSubstitute = Create.MockedDbContextFor<ApplicationDbContext>();
     }
 

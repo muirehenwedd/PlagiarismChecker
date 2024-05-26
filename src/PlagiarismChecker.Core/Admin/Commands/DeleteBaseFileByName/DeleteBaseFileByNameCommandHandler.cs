@@ -22,7 +22,7 @@ public sealed class DeleteBaseFileByNameCommandHandler : ICommandHandler<DeleteB
         var file = await _dbContext
             .BaseFiles
             .Include(e => e.Document)
-            .FirstOrDefaultAsync(f => f.FileName == command.Name,
+            .FirstOrDefaultAsync(f => f.Name == command.Name,
                 cancellationToken);
 
         if (file is null)

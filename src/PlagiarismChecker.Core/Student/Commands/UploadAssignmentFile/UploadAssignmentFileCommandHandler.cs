@@ -50,20 +50,10 @@ public sealed class UploadAssignmentFileCommandHandler
 
         var blobId = await _blobService.UploadAsync(command.FileStream, command.ContentType, cancellationToken);
 
-        var newFile = new AssignmentFile
-        {
-            FileName = command.FileName,
-            BlobFileId = blobId,
-            Assignment = assignment
-        };
+        var document = _documentInitializationService.Create(command.FileStream, command.ContentType, command.FileName);
+        var newFile = AssignmentFile.Create(command.FileName, document, assignment, blobId);
 
         _dbContext.AssignmentFiles.Add(newFile);
-
-        var document = _documentInitializationService.Create(command.FileStream, command.ContentType, command.FileName);
-        _dbContext.Documents.Add(document);
-
-        newFile.DocumentId = document.Id;
-
         await _dbContext.SaveChangesAsync(CancellationToken.None);
 
         return _assignmentFileMapper.ToDto(newFile);

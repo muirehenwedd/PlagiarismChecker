@@ -29,7 +29,7 @@ public sealed class DocumentEntityConfiguration : IEntityTypeConfiguration<Docum
             .IsRequired();
 
         builder
-            .Property(e => e.FirstFileIndex)
+            .Property(e => e.FirstWordIndex)
             .IsRequired();
 
         builder

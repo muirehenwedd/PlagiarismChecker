@@ -10,7 +10,6 @@ public static class ServicesRegistration
         serviceCollection
             .AddSingleton<IFileSystem, FileSystem>()
             .AddSingleton<IDocumentInitializationService, DocumentInitializationService>()
-            .AddSingleton<IDocumentComparerService, DocumentComparerService>()
             .AddSingleton<IFileReaderService, FileReaderService>()
             .AddSingleton<ITokenHasherService, TokenHasherService>()
             .AddSingleton<IHashSorterService, HashSorterService>()

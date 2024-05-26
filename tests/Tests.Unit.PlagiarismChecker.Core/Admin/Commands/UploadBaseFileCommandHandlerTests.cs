@@ -11,15 +11,13 @@ using PlagiarismChecker.Core.Student.Options;
 using PlagiarismChecker.Domain.Entities;
 using PlagiarismChecker.Domain.Repository;
 using PlagiarismChecker.Infrastructure.Data;
+using Tests.Unit.PlagiarismChecker.Core.__Utils;
 
 namespace Tests.Unit.PlagiarismChecker.Core.Admin.Commands;
 
 public class UploadBaseFileCommandHandlerTests
 {
-    private readonly Faker<BaseFile> _baseFileFaker = new Faker<BaseFile>()
-        .RuleFor(x => x.Id, x => BaseFileId.New())
-        .RuleFor(x => x.FileName, x => x.System.FileName("txt"))
-        .UseSeed(8);
+    private readonly Faker<BaseFile> _baseFileFaker;
 
     private readonly UploadBaseFileCommandHandler _sut;
     private readonly IApplicationDbContext _dbContextSubstitute;
@@ -29,6 +27,7 @@ public class UploadBaseFileCommandHandlerTests
 
     public UploadBaseFileCommandHandlerTests()
     {
+        _baseFileFaker = BaseFileFaker.Create();
         _dbContextSubstitute = Create.MockedDbContextFor<ApplicationDbContext>();
         _documentInitializationService = Substitute.For<IDocumentInitializationService>();
         _blobService = Substitute.For<IBlobService>();
@@ -50,28 +49,21 @@ public class UploadBaseFileCommandHandlerTests
         // Arrange
         var generated = _baseFileFaker.Generate();
         var blobFileId = BlobFileId.New();
-        _blobService.UploadAsync(_fakeFileStream, generated.FileName).Returns(Task.FromResult(blobFileId));
+        _blobService.UploadAsync(_fakeFileStream, generated.Name).Returns(Task.FromResult(blobFileId));
 
         var contentType = MediaTypeNames.Text.Plain;
-        var command = new UploadBaseFileCommand(_fakeFileStream, contentType, generated.FileName);
+        var command = new UploadBaseFileCommand(_fakeFileStream, contentType, generated.Name);
 
-        var document = new Document
-        {
-            WordsCount = 0,
-            FirstFileIndex = 0,
-            DocumentSortedWordHashes = [],
-            NumericOrderedWordHashes = [],
-            NumericOrderedWordIndexes = []
-        };
+        var document = Document.Create([], [], [], 0);
 
-        _documentInitializationService.Create(_fakeFileStream, contentType, generated.FileName)
+        _documentInitializationService.Create(_fakeFileStream, contentType, generated.Name)
             .Returns(document);
 
         // Act
         _ = await _sut.Handle(command, CancellationToken.None);
 
         // Assert
-        _dbContextSubstitute.BaseFiles.Received(1).Add(Arg.Is<BaseFile>(tf => tf.FileName == generated.FileName));
+        _dbContextSubstitute.BaseFiles.Received(1).Add(Arg.Is<BaseFile>(tf => tf.Name == generated.Name));
         await _dbContextSubstitute.Received(1).SaveChangesAsync(CancellationToken.None);
     }
 
@@ -103,28 +95,21 @@ public class UploadBaseFileCommandHandlerTests
         var generated = _baseFileFaker.Generate();
         var blobFileId = BlobFileId.New();
 
-        _blobService.UploadAsync(_fakeFileStream, generated.FileName).Returns(Task.FromResult(blobFileId));
+        _blobService.UploadAsync(_fakeFileStream, generated.Name).Returns(Task.FromResult(blobFileId));
 
         var contentType = MediaTypeNames.Text.Plain;
 
-        var document = new Document
-        {
-            WordsCount = 0,
-            FirstFileIndex = 0,
-            DocumentSortedWordHashes = [],
-            NumericOrderedWordHashes = [],
-            NumericOrderedWordIndexes = []
-        };
+        var document = Document.Create([], [], [], 0);
 
-        _documentInitializationService.Create(_fakeFileStream, contentType, generated.FileName).Returns(document);
+        _documentInitializationService.Create(_fakeFileStream, contentType, generated.Name).Returns(document);
 
-        var command = new UploadBaseFileCommand(_fakeFileStream, contentType, generated.FileName);
+        var command = new UploadBaseFileCommand(_fakeFileStream, contentType, generated.Name);
 
         // Act
         var result = await _sut.Handle(command, CancellationToken.None);
 
         // Assert
         result.Id.Should().NotBe(BaseFileId.Empty);
-        result.Name.Should().Be(generated.FileName);
+        result.Name.Should().Be(generated.Name);
     }
 }

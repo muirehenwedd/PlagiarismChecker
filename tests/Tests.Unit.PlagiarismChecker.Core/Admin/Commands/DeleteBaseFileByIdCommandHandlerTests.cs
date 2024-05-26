@@ -8,32 +8,20 @@ using PlagiarismChecker.Core.Admin.Exceptions;
 using PlagiarismChecker.Domain.Entities;
 using PlagiarismChecker.Domain.Repository;
 using PlagiarismChecker.Infrastructure.Data;
+using Tests.Unit.PlagiarismChecker.Core.__Utils;
 
 namespace Tests.Unit.PlagiarismChecker.Core.Admin.Commands;
 
 public sealed class DeleteBaseFileByIdCommandHandlerTests
 {
-    private readonly Faker<BaseFile> _baseFileFaker = new Faker<BaseFile>()
-        .RuleFor(x => x.Id, _ => BaseFileId.New())
-        .RuleFor(x => x.FileName, x => x.System.FileName("txt"))
-        .RuleFor(x => x.BlobFileId, _ => BlobFileId.New())
-        .RuleFor(x => x.Document, x => new Document
-        {
-            Id = DocumentId.New(),
-            WordsCount = 0,
-            FirstFileIndex = 1,
-            DocumentSortedWordHashes = [],
-            NumericOrderedWordHashes = [],
-            NumericOrderedWordIndexes = []
-        })
-        .UseSeed(8); //todo: move to utils.
-
+    private readonly Faker<BaseFile> _baseFileFaker;
     private readonly DeleteBaseFileByIdCommandHandler _sut;
     private readonly IApplicationDbContext _dbContextSubstitute;
     private readonly IBlobService _blobService;
 
     public DeleteBaseFileByIdCommandHandlerTests()
     {
+        _baseFileFaker = BaseFileFaker.Create();
         _dbContextSubstitute = Create.MockedDbContextFor<ApplicationDbContext>();
         _blobService = Substitute.For<IBlobService>();
 

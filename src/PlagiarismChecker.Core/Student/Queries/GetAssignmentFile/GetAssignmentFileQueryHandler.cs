@@ -41,7 +41,7 @@ public sealed class GetAssignmentFileQueryHandler
             {
                 e.Id,
                 e.BlobFileId,
-                e.FileName
+                FileName = e.Name
             })
             .FirstOrDefaultAsync(f => f.Id == query.AssignmentFileId, cancellationToken);
 

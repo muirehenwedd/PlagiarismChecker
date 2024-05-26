@@ -40,14 +40,7 @@ public sealed class CreateAssignmentCommandHandler
         if (notUnique)
             throw new AssignmentAlreadyCreatedException();
 
-        var assignment = new Assignment
-        {
-            Id = AssignmentId.New(),
-            Name = command.Name,
-            CreationTimestamp = _timeProvider.GetUtcNow(),
-            OwnerId = userId,
-            AssignmentFiles = []
-        };
+        var assignment = Assignment.Create(command.Name, userId);
 
         _dbContext.StudentAssignments.Add(assignment);
 

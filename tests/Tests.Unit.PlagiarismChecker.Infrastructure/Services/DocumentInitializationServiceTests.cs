@@ -48,6 +48,6 @@ public sealed class DocumentInitializationServiceTests
         var actualResult = _sut.Create(stream, contentType, fileName);
 
         // Assert
-        actualResult.FirstFileIndex.Should().Be(2);
+        actualResult.FirstWordIndex.Should().Be(2);
     }
 }

@@ -31,26 +31,17 @@ public sealed class UploadBaseFileCommandHandler
     {
         var blobId = await _blobService.UploadAsync(command.FileStream, command.ContentType, cancellationToken);
 
-        var newFile = new BaseFile
-        {
-            Id = BaseFileId.New(),
-            FileName = command.FileName,
-            BlobFileId = blobId
-        };
+        var document = _documentInitializationService.Create(command.FileStream, command.ContentType, command.FileName);
+
+        var newFile = BaseFile.Create(command.FileName, document, blobId);
 
         _dbContext.BaseFiles.Add(newFile);
-
-        var document = _documentInitializationService.Create(command.FileStream, command.ContentType, command.FileName);
-        _dbContext.Documents.Add(document);
-
-        newFile.DocumentId = document.Id;
-
         await _dbContext.SaveChangesAsync(CancellationToken.None);
 
         return new UploadBaseFileCommandResult
         {
             Id = newFile.Id,
-            Name = newFile.FileName
+            Name = newFile.Name
         };
     }
 }

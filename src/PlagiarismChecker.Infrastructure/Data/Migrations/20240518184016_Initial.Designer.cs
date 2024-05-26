@@ -170,7 +170,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                     b.Property<Guid>("DocumentId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("FileName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -195,7 +195,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                     b.Property<Guid>("DocumentId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("FileName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -216,7 +216,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("bigint[]");
 
-                    b.Property<int>("FirstFileIndex")
+                    b.Property<int>("FirstWordIndex")
                         .HasColumnType("integer");
 
                     b.Property<long[]>("NumericOrderedWordHashes")

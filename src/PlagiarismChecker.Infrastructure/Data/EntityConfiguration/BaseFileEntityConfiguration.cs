@@ -17,7 +17,7 @@ public sealed class BaseFileEntityConfiguration : IEntityTypeConfiguration<BaseF
             .IsRequired();
 
         builder
-            .Property(e => e.FileName)
+            .Property(e => e.Name)
             .IsRequired();
 
         builder

@@ -26,7 +26,7 @@ public sealed class GetAllBaseFilesQueryHandler
             .Select(file => new BaseFileDto
             {
                 Id = file.Id,
-                Name = file.FileName
+                Name = file.Name
             })
             .ToArrayAsync(cancellationToken);
 

@@ -33,15 +33,7 @@ public sealed class DocumentInitializationService : IDocumentInitializationServi
 
         var firstWordIndex = GetFirstWordIndex(tokens);
 
-        var document = new Document
-        {
-            Id = DocumentId.New(),
-            DocumentSortedWordHashes = documentOrderedHashes,
-            NumericOrderedWordHashes = hashes,
-            NumericOrderedWordIndexes = indexes,
-            FirstFileIndex = firstWordIndex,
-            WordsCount = documentOrderedHashes.Length
-        };
+        var document = Document.Create(documentOrderedHashes, hashes, indexes, firstWordIndex);
 
         return document;
     }

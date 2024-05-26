@@ -59,7 +59,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                     DocumentSortedWordHashes = table.Column<long[]>(type: "bigint[]", nullable: false),
                     NumericOrderedWordHashes = table.Column<long[]>(type: "bigint[]", nullable: false),
                     NumericOrderedWordIndexes = table.Column<int[]>(type: "integer[]", nullable: false),
-                    FirstFileIndex = table.Column<int>(type: "integer", nullable: false),
+                    FirstWordIndex = table.Column<int>(type: "integer", nullable: false),
                     WordsCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -198,7 +198,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FileName = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     DocumentId = table.Column<Guid>(type: "uuid", nullable: false),
                     BlobFileId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
@@ -218,7 +218,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FileName = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     BlobFileId = table.Column<Guid>(type: "uuid", nullable: false),
                     AssignmentId = table.Column<Guid>(type: "uuid", nullable: false),
                     DocumentId = table.Column<Guid>(type: "uuid", nullable: false)

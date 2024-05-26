@@ -17,7 +17,7 @@ public sealed class AssignmentFileEntityConfiguration : IEntityTypeConfiguration
             .IsRequired();
 
         builder
-            .Property(e => e.FileName)
+            .Property(e => e.Name)
             .IsRequired();
 
         builder

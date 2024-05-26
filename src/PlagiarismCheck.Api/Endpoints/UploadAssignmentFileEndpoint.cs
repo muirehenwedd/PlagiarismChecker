@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
 using PlagiarismChecker.Core.Student.Commands.UploadAssignmentFile;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismCheck.Api.Endpoints;
 
@@ -29,7 +30,7 @@ public sealed class UploadAssignmentFileEndpoint : IEndpoint<UploadAssignmentFil
 
         var command = new UploadAssignmentFileCommand(
             user,
-            assignmentId,
+            new AssignmentId(assignmentId),
             contentStream,
             formFile.ContentType,
             formFile.FileName

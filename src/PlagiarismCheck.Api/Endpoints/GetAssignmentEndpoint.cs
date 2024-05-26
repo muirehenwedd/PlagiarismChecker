@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
 using PlagiarismChecker.Core.Student.Queries.GetAssignment;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismCheck.Api.Endpoints;
 
@@ -22,7 +23,7 @@ public sealed class GetAssignmentEndpoint : IEndpoint<GetAssignmentEndpoint.Para
     {
         var (assignmentId, user, sender) = parameters;
 
-        var query = new GetAssignmentQuery(user, assignmentId);
+        var query = new GetAssignmentQuery(user, new AssignmentId(assignmentId));
         var result = await sender.Send(query);
 
         return TypedResults.Json(result);

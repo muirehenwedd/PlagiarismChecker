@@ -15,12 +15,12 @@ public partial class AssignmentMapper : IAssignmentMapper
         _assignmentFileMapper = assignmentFileMapper;
     }
 
-    [MapProperty(nameof(StudentAssignment.Name), nameof(AssignmentDto.AssignmentName))]
-    public partial AssignmentDto ToDto(StudentAssignment from);
+    [MapProperty(nameof(Assignment.Name), nameof(AssignmentDto.AssignmentName))]
+    public partial AssignmentDto ToDto(Assignment from);
 
-    public partial IEnumerable<AssignmentDto> ToEnumerableDto(IEnumerable<StudentAssignment> from);
+    public partial IEnumerable<AssignmentDto> ToEnumerableDto(IEnumerable<Assignment> from);
 
-    public partial IQueryable<AssignmentDto> ToQueryableDto(IQueryable<StudentAssignment> from);
+    public partial IQueryable<AssignmentDto> ToQueryableDto(IQueryable<Assignment> from);
 
     private AssignmentFileDto ToDto(AssignmentFile from)
     {

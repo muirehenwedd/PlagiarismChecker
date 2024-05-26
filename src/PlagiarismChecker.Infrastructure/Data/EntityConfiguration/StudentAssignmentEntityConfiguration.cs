@@ -4,9 +4,9 @@ using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismChecker.Infrastructure.Data.EntityConfiguration;
 
-public sealed class StudentAssignmentEntityConfiguration : IEntityTypeConfiguration<StudentAssignment>
+public sealed class StudentAssignmentEntityConfiguration : IEntityTypeConfiguration<Assignment>
 {
-    public void Configure(EntityTypeBuilder<StudentAssignment> builder)
+    public void Configure(EntityTypeBuilder<Assignment> builder)
     {
         builder
             .HasKey(e => e.Id);

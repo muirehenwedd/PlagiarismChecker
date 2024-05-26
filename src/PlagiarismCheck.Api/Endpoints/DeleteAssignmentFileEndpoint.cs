@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
 using PlagiarismChecker.Core.Student.Commands.DeleteAssignmentFile;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismCheck.Api.Endpoints;
 
@@ -23,7 +24,12 @@ public sealed class DeleteAssignmentFileEndpoint : IEndpoint<DeleteAssignmentFil
     {
         var (user, sender, assignmentId, assignmentFileId) = parameters;
 
-        var command = new DeleteAssignmentFileCommand(user, assignmentId, assignmentFileId);
+        var command = new DeleteAssignmentFileCommand(
+            user,
+            new AssignmentId(assignmentId),
+            new AssignmentFileId(assignmentFileId)
+        );
+
         var result = await sender.Send(command);
 
         return TypedResults.NoContent();

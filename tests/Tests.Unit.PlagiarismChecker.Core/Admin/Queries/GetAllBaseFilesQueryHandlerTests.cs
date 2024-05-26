@@ -13,7 +13,7 @@ namespace Tests.Unit.PlagiarismChecker.Core.Admin.Queries;
 public class GetAllBaseFilesQueryHandlerTests
 {
     private readonly Faker<BaseFile> _baseFileFaker = new Faker<BaseFile>()
-        .RuleFor(x => x.Id, x => Guid.NewGuid())
+        .RuleFor(x => x.Id, x => BaseFileId.New())
         .RuleFor(x => x.FileName, x => x.System.FileName("txt"))
         .UseSeed(8);
 

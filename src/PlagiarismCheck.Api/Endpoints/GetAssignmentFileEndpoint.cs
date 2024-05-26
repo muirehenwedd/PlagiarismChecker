@@ -5,6 +5,7 @@ using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
 using PlagiarismChecker.Core.Student.Commands.DeleteAssignmentFile;
 using PlagiarismChecker.Core.Student.Queries.GetAssignmentFile;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismCheck.Api.Endpoints;
 
@@ -24,7 +25,10 @@ public sealed class GetAssignmentFileEndpoint : IEndpoint<GetAssignmentFileEndpo
     {
         var (user, sender, assignmentId, assignmentFileId) = parameters;
 
-        var command = new GetAssignmentFileQuery(user, assignmentId, assignmentFileId);
+        var command = new GetAssignmentFileQuery(user,
+            new AssignmentId(assignmentId),
+            new AssignmentFileId(assignmentFileId));
+
         var (fileContent, fileName, contentType) = await sender.Send(command);
 
         return TypedResults.File(fileContent, contentType, fileName);

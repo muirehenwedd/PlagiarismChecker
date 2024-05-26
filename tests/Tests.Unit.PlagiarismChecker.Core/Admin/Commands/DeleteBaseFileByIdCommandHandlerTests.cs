@@ -14,12 +14,12 @@ namespace Tests.Unit.PlagiarismChecker.Core.Admin.Commands;
 public sealed class DeleteBaseFileByIdCommandHandlerTests
 {
     private readonly Faker<BaseFile> _baseFileFaker = new Faker<BaseFile>()
-        .RuleFor(x => x.Id, _ => Guid.NewGuid())
+        .RuleFor(x => x.Id, _ => BaseFileId.New())
         .RuleFor(x => x.FileName, x => x.System.FileName("txt"))
         .RuleFor(x => x.BlobFileId, _ => Guid.NewGuid())
         .RuleFor(x => x.Document, x => new Document
         {
-            Id = Guid.NewGuid(),
+            Id = DocumentId.New(),
             WordsCount = 0,
             FirstFileIndex = 1,
             DocumentSortedWordHashes = [],

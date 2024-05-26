@@ -4,9 +4,9 @@ using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PlagiarismChecker.Core.Common.Services;
-using PlagiarismChecker.Core.Common.Services.Models;
 using PlagiarismChecker.Core.Options;
 using PlagiarismChecker.Core.Student.Exceptions;
+using PlagiarismChecker.Domain.ValueObjects;
 
 namespace PlagiarismChecker.Core.Student.Queries.CheckForPlagiarism;
 

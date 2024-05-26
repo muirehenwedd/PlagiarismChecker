@@ -17,7 +17,7 @@ namespace Tests.Unit.PlagiarismChecker.Core.Admin.Commands;
 public class UploadBaseFileCommandHandlerTests
 {
     private readonly Faker<BaseFile> _baseFileFaker = new Faker<BaseFile>()
-        .RuleFor(x => x.Id, x => Guid.NewGuid())
+        .RuleFor(x => x.Id, x => BaseFileId.New())
         .RuleFor(x => x.FileName, x => x.System.FileName("txt"))
         .UseSeed(8);
 
@@ -124,7 +124,7 @@ public class UploadBaseFileCommandHandlerTests
         var result = await _sut.Handle(command, CancellationToken.None);
 
         // Assert
-        result.Id.Should().NotBe(Guid.Empty);
+        result.Id.Should().NotBe(BaseFileId.Empty);
         result.Name.Should().Be(generated.FileName);
     }
 }

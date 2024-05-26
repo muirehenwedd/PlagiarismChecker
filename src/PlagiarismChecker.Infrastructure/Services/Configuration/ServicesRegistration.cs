@@ -8,7 +8,6 @@ public static class ServicesRegistration
 {
     internal static IServiceCollection RegisterServices(this IServiceCollection serviceCollection) =>
         serviceCollection
-            .AddSingleton<IGuidGeneratorService, GuidGeneratorService>()
             .AddSingleton<IFileSystem, FileSystem>()
             .AddSingleton<IDocumentInitializationService, DocumentInitializationService>()
             .AddSingleton<IDocumentComparerService, DocumentComparerService>()

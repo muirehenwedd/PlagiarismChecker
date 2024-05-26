@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
 using PlagiarismChecker.Core.Student.Queries.CheckForPlagiarism;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismCheck.Api.Endpoints;
 
@@ -28,7 +29,7 @@ public sealed class CheckForPlagiarismEndpoint : IEndpoint<CheckForPlagiarismEnd
             parameters;
 
         var query = new CheckForPlagiarismQuery(user,
-            assignmentId,
+            new AssignmentId(assignmentId),
             mismatchTolerance,
             mismatchPercentage,
             phraseLength,

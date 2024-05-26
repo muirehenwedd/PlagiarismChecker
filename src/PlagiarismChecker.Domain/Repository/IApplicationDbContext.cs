@@ -6,7 +6,7 @@ namespace PlagiarismChecker.Domain.Repository;
 public interface IApplicationDbContext
 {
     DbSet<BaseFile> BaseFiles { get; }
-    DbSet<StudentAssignment> StudentAssignments { get; }
+    DbSet<Assignment> StudentAssignments { get; }
     DbSet<User> Users { get; }
     DbSet<AssignmentFile> AssignmentFiles { get; }
     DbSet<Document> Documents { get; }

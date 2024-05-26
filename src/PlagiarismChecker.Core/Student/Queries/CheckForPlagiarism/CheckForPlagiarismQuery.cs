@@ -1,11 +1,12 @@
 ﻿using System.Security.Claims;
 using Mediator;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismChecker.Core.Student.Queries.CheckForPlagiarism;
 
 public sealed record CheckForPlagiarismQuery(
     ClaimsPrincipal User,
-    Guid AssignmentId,
+    AssignmentId AssignmentId,
     int? MismatchTolerance,
     int? MismatchPercentage,
     int? PhraseLength,

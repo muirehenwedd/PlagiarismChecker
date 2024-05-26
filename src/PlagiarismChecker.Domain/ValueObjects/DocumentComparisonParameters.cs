@@ -1,4 +1,4 @@
-﻿namespace PlagiarismChecker.Core.Common.Services.Models;
+﻿namespace PlagiarismChecker.Domain.ValueObjects;
 
 public sealed record DocumentComparisonParameters(
     int MismatchTolerance,

@@ -2,7 +2,7 @@
 
 public sealed class Document
 {
-    public Guid Id { get; init; }
+    public DocumentId Id { get; init; }
     public required long[] DocumentSortedWordHashes { get; init; }
     public required long[] NumericOrderedWordHashes { get; init; }
     public required int[] NumericOrderedWordIndexes { get; init; }

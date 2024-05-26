@@ -6,7 +6,7 @@ using PlagiarismChecker.Domain.Repository;
 
 namespace PlagiarismChecker.Infrastructure.Data;
 
-public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<UserId>, UserId>, IApplicationDbContext
 {
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options
@@ -16,7 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
     }
 
     public virtual DbSet<BaseFile> BaseFiles => Set<BaseFile>();
-    public virtual DbSet<StudentAssignment> StudentAssignments => Set<StudentAssignment>();
+    public virtual DbSet<Assignment> StudentAssignments => Set<Assignment>();
     public virtual DbSet<AssignmentFile> AssignmentFiles => Set<AssignmentFile>();
     public virtual DbSet<Document> Documents => Set<Document>();
 }

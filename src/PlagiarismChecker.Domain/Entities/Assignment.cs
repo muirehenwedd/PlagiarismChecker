@@ -1,10 +1,10 @@
 ﻿namespace PlagiarismChecker.Domain.Entities;
 
-public sealed class StudentAssignment
+public sealed class Assignment
 {
-    public Guid Id { get; set; }
+    public AssignmentId Id { get; set; }
     public User Owner { get; set; }
-    public Guid OwnerId { get; set; }
+    public UserId OwnerId { get; set; }
     public required string Name { get; set; }
     public required DateTimeOffset CreationTimestamp { get; set; }
 

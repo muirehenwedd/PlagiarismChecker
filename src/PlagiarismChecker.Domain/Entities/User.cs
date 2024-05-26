@@ -2,6 +2,6 @@
 
 namespace PlagiarismChecker.Domain.Entities;
 
-public sealed class User : IdentityUser<Guid>
+public sealed class User : IdentityUser<UserId>
 {
 }

@@ -5,7 +5,7 @@ namespace PlagiarismChecker.Core.Mappers;
 
 public interface IAssignmentMapper
 {
-    AssignmentDto ToDto(StudentAssignment from);
-    IEnumerable<AssignmentDto> ToEnumerableDto(IEnumerable<StudentAssignment> from);
-    IQueryable<AssignmentDto> ToQueryableDto(IQueryable<StudentAssignment> from);
+    AssignmentDto ToDto(Assignment from);
+    IEnumerable<AssignmentDto> ToEnumerableDto(IEnumerable<Assignment> from);
+    IQueryable<AssignmentDto> ToQueryableDto(IQueryable<Assignment> from);
 }

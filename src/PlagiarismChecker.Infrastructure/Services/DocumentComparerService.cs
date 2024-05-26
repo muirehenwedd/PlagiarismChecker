@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using PlagiarismChecker.Core.Common.Services;
-using PlagiarismChecker.Core.Common.Services.Models;
 using PlagiarismChecker.Core.Options;
 using PlagiarismChecker.Domain.Entities;
+using PlagiarismChecker.Domain.ValueObjects;
 using PlagiarismChecker.Infrastructure.Options;
 
 namespace PlagiarismChecker.Infrastructure.Services;

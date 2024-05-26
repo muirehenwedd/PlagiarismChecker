@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
 using PlagiarismChecker.Core.Student.Commands.DeleteAssignment;
+using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismCheck.Api.Endpoints;
 
@@ -22,7 +23,7 @@ public sealed class DeleteAssignmentEndpoint : IEndpoint<DeleteAssignmentEndpoin
     {
         var (assignmentId, user, sender) = parameters;
 
-        var result = await sender.Send(new DeleteAssignmentCommand(user, assignmentId));
+        var result = await sender.Send(new DeleteAssignmentCommand(user, new AssignmentId(assignmentId)));
 
         return TypedResults.NoContent();
     }

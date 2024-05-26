@@ -1,5 +1,5 @@
-﻿using PlagiarismChecker.Core.Common.Services.Models;
-using PlagiarismChecker.Domain.Entities;
+﻿using PlagiarismChecker.Domain.Entities;
+using PlagiarismChecker.Domain.ValueObjects;
 
 namespace PlagiarismChecker.Core.Common.Services;
 

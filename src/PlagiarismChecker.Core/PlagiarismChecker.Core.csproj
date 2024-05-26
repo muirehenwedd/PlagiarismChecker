@@ -33,6 +33,10 @@
 
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Common\Services\Models\" />
+    </ItemGroup>
+
 
 
 

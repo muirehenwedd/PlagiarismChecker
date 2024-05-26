@@ -40,7 +40,7 @@ public sealed class CreateAssignmentCommandHandler
         if (notUnique)
             throw new AssignmentAlreadyCreatedException();
 
-        var assignment = new StudentAssignment
+        var assignment = new Assignment
         {
             Name = command.Name,
             CreationTimestamp = _timeProvider.GetUtcNow(),

@@ -9,21 +9,18 @@ public sealed class DocumentInitializationService : IDocumentInitializationServi
     private readonly ITokenizerService _tokenizerService;
     private readonly ITokenHasherService _tokenHasherService;
     private readonly IHashSorterService _hashSorterService;
-    private readonly IGuidGeneratorService _guidGenerator;
 
     public DocumentInitializationService(
         IFileReaderService fileReaderService,
         ITokenizerService tokenizerService,
         ITokenHasherService tokenHasherService,
-        IHashSorterService hashSorterService,
-        IGuidGeneratorService guidGenerator
+        IHashSorterService hashSorterService
     )
     {
         _fileReaderService = fileReaderService;
         _tokenizerService = tokenizerService;
         _tokenHasherService = tokenHasherService;
         _hashSorterService = hashSorterService;
-        _guidGenerator = guidGenerator;
     }
 
     public Document Create(Stream fileStream, string contentType, string name)
@@ -38,7 +35,7 @@ public sealed class DocumentInitializationService : IDocumentInitializationServi
 
         var document = new Document
         {
-            Id = _guidGenerator.NewGuid(),
+            Id = DocumentId.New(),
             DocumentSortedWordHashes = documentOrderedHashes,
             NumericOrderedWordHashes = hashes,
             NumericOrderedWordIndexes = indexes,

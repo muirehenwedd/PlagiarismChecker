@@ -13,7 +13,6 @@ public sealed class DocumentInitializationServiceTests
     private readonly ITokenizerService _tokenizerService;
     private readonly ITokenHasherService _tokenHasherService;
     private readonly IHashSorterService _hashSorterService;
-    private readonly IGuidGeneratorService _guidGenerator;
 
     public DocumentInitializationServiceTests()
     {
@@ -21,14 +20,12 @@ public sealed class DocumentInitializationServiceTests
         _tokenizerService = Substitute.For<ITokenizerService>();
         _tokenHasherService = Substitute.For<ITokenHasherService>();
         _hashSorterService = Substitute.For<IHashSorterService>();
-        _guidGenerator = Substitute.For<IGuidGeneratorService>();
 
         _sut = new DocumentInitializationService(
             _fileReaderService,
             _tokenizerService,
             _tokenHasherService,
-            _hashSorterService,
-            _guidGenerator
+            _hashSorterService
         );
     }
 

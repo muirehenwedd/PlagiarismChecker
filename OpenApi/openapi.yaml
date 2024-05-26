@@ -20,6 +20,8 @@ paths:
   /admin/files:
     post:
       operationId: UploadBaseFile
+      security:
+        - ApiKeyAuth: [ ]
       summary: Upload base file
       tags:
         - Admin
@@ -37,6 +39,8 @@ paths:
       summary: Get all base files
       tags:
         - Admin
+      security:
+        - ApiKeyAuth: [ ]
       responses:
         '200':
           description: Success
@@ -52,6 +56,8 @@ paths:
       summary: Delete base file by name
       tags:
         - Admin
+      security:
+        - ApiKeyAuth: [ ]
       parameters:
         - name: name
           in: path
@@ -70,6 +76,8 @@ paths:
       summary: Delete base file by ID
       tags:
         - Admin
+      security:
+        - ApiKeyAuth: [ ]
       parameters:
         - name: fileId
           in: path
@@ -89,6 +97,8 @@ paths:
       summary: Create assignment
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       requestBody:
         $ref: '#/components/requestBodies/CreateAssignmentBody'
       responses:
@@ -105,6 +115,8 @@ paths:
       summary: Get all assignments
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       responses:
         '200':
           description: Success
@@ -120,6 +132,8 @@ paths:
       summary: Upload assignment file
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       parameters:
         - name: assignmentId
           in: path
@@ -147,6 +161,8 @@ paths:
       summary: Get assignment file
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       parameters:
         - name: assignmentId
           in: path
@@ -189,6 +205,8 @@ paths:
       summary: Delete assignment file
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       parameters:
         - name: assignmentId
           in: path
@@ -224,6 +242,8 @@ paths:
       summary: Get assignment
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       parameters:
         - name: assignmentId
           in: path
@@ -248,6 +268,8 @@ paths:
       summary: Delete assignment
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       parameters:
         - name: assignmentId
           in: path
@@ -269,6 +291,8 @@ paths:
       summary: Execute plagiarism check
       tags:
         - Assignments
+      security:
+        - BearerAuth: [ ]
       parameters:
         - in: path
           name: assignmentId
@@ -373,6 +397,8 @@ paths:
       summary: Refresh token
       tags:
         - Identity
+      security:
+        - BearerAuth: []
       requestBody:
         content:
           application/json:
@@ -590,7 +616,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            example1:
+            BaseFileNotFound:
               $ref: '#/components/examples/BaseFileNotFoundExample'
     AssignmentAccessDenied:
       description: User has no rights to access this assignment
@@ -599,7 +625,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            example1:
+            AssignmentAccessDenied:
               $ref: '#/components/examples/AssignmentAccessDeniedExample'
     AssignmentAlreadyCreated:
       description: User already created assignment with this name
@@ -608,7 +634,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            example1:
+            AssignmentAlreadyCreated:
               $ref: '#/components/examples/AssignmentAlreadyCreatedExample'
     AssignmentFileNotFound:
       description: Assignment file with such ID was not found
@@ -617,7 +643,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            example1:
+            AssignmentFileNotFound:
               $ref: '#/components/examples/AssignmentFileNotFoundExample'
     AssignmentNotFound:
       description: Assignment with such ID was not found
@@ -626,7 +652,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            example1:
+            AssignmentNotFound:
               $ref: '#/components/examples/AssignmentNotFoundExample'
   
   examples:
@@ -669,3 +695,14 @@ components:
         status: 404
         detail: 'Assignment was not found.'
         custom-error-code: 203
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

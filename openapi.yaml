@@ -602,6 +602,16 @@ components:
           type: number
           minimum: 0
           maximum: 100
+        wordMarkersLeft:
+          description: List of markers for words of the left document.
+          type: array
+          items:
+            $ref: '#/components/schemas/WordMarker'
+        wordMarkersRight:
+          description: List of markers for words of the right document.
+          type: array
+          items:
+            $ref: '#/components/schemas/WordMarker'
       example:
         documentNameLeft: left.txt
         documentNameRight: right.txt
@@ -612,6 +622,25 @@ components:
         overallMatchCountRight: 106
         overallMatchPercentLeft: 47
         overallMatchPercentRight: 100
+        wordMarkersLeft:
+          - 0
+          - 0
+          - 0
+          - 1
+        wordMarkersRight:
+          - 0
+          - 0
+          - 0
+          - 1
+    WordMarker:
+      description: |
+        Describes if word is part of copied phrase in other document.
+        0 for 'Unmatched'. Word is not a part of copied phrase.
+        1 for 'Match'. Word is a part of perfect matched phrase (without any differences).
+        2 for 'Flaw'. Word is a part of flawed phrase (there are some differences, but phase is recognised anyway).
+      type: integer
+      minimum: 0
+      maximum: 2
     PlagiarismCheckResult:
       description: Plagiarism check operation result
       type: object

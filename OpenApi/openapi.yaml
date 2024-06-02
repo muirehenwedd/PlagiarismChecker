@@ -1,4 +1,4 @@
-﻿openapi: 3.0.0
+﻿openapi: 3.1.0
 info:
   title: PlagiarismChecker API
   version: '1.0'
@@ -459,7 +459,6 @@ components:
         refreshToken:
           type: string
           nullable: true
-      additionalProperties: false
     LoginRequest:
       type: object
       properties:
@@ -475,14 +474,12 @@ components:
         twoFactorRecoveryCode:
           type: string
           nullable: true
-      additionalProperties: false
     RefreshRequest:
       type: object
       properties:
         refreshToken:
           type: string
           nullable: true
-      additionalProperties: false
     RegisterRequest:
       type: object
       properties:
@@ -492,7 +489,6 @@ components:
         password:
           type: string
           nullable: true
-      additionalProperties: false
     
     BaseFileDto:
       description: Uploaded by the administrator file
@@ -595,28 +591,34 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WordMarker"
-      example:
-        documentNameLeft: left.txt
-        documentNameRight: right.txt
-        perfectMatch: 105
-        perfectMatchPercentLeft: 47
-        perfectMatchPercentRight: 99
-        overallMatchCountLeft: 106
-        overallMatchCountRight: 106
-        overallMatchPercentLeft: 47
-        overallMatchPercentRight: 100
-        wordMarkersLeft: [ 0, 0, 0, 1 ]
-        wordMarkersRight: [ 0, 0, 0, 1 ]
+      examples:
+        example1:
+          value:
+            documentNameLeft: left.txt
+            documentNameRight: right.txt
+            perfectMatch: 105
+            perfectMatchPercentLeft: 47
+            perfectMatchPercentRight: 99
+            overallMatchCountLeft: 106
+            overallMatchCountRight: 106
+            overallMatchPercentLeft: 47
+            overallMatchPercentRight: 100
+            wordMarkersLeft: [ 0, 0, 0, 1 ]
+            wordMarkersRight: [ 0, 0, 0, 1 ]
     
     WordMarker:
-      description: |
-        Describes if word is part of copied phrase in other document.
-        0 for 'Unmatched'. Word is not a part of copied phrase.
-        1 for 'Match'. Word is a part of perfect matched phrase (without any differences).
-        2 for 'Flaw'. Word is a part of flawed phrase (there are some differences, but phase is recognised anyway).
+      description: Indicates if word is part of copied phrase in other document.
       type: integer
-      minimum: 0
-      maximum: 2
+      oneOf:
+        - title: Unmatched
+          const: 0
+          description: Word is not a part of copied phrase.
+        - title: Match
+          const: 1
+          description: Word is a part of perfect matched phrase (without any differences).
+        - title: Flaw
+          const: 2
+          description: Word is a part of flawed phrase (there are some differences, but phase is recognised anyway).
     
     PlagiarismCheckResult:
       description: Plagiarism check operation result

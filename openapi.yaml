@@ -473,48 +473,58 @@ components:
       type: object
       properties:
         tokenType:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           readOnly: true
         accessToken:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         expiresIn:
           type: integer
           format: int64
         refreshToken:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     LoginRequest:
       type: object
       properties:
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         twoFactorCode:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         twoFactorRecoveryCode:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     RefreshRequest:
       type: object
       properties:
         refreshToken:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     RegisterRequest:
       type: object
       properties:
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     BaseFileDto:
       description: Uploaded by the administrator file
       type: object
@@ -526,7 +536,8 @@ components:
         name:
           type: string
           description: name of file
-          example: google_results_collected.txt
+          examples:
+            - google_results_collected.txt
     AssignmentFileDto:
       description: File, associated with the assignment
       type: object
@@ -538,7 +549,8 @@ components:
         name:
           type: string
           description: name of file
-          example: file1.docx
+          examples:
+            - file1.docx
     AssignmentDto:
       description: Set of documents, usually grouped by task
       type: object
@@ -609,27 +621,25 @@ components:
           items:
             $ref: '#/components/schemas/WordMarker'
       examples:
-        example1:
-          value:
-            documentNameLeft: left.txt
-            documentNameRight: right.txt
-            perfectMatch: 105
-            perfectMatchPercentLeft: 47
-            perfectMatchPercentRight: 99
-            overallMatchCountLeft: 106
-            overallMatchCountRight: 106
-            overallMatchPercentLeft: 47
-            overallMatchPercentRight: 100
-            wordMarkersLeft:
-              - 0
-              - 0
-              - 0
-              - 1
-            wordMarkersRight:
-              - 0
-              - 0
-              - 0
-              - 1
+        - documentNameLeft: left.txt
+          documentNameRight: right.txt
+          perfectMatch: 105
+          perfectMatchPercentLeft: 47
+          perfectMatchPercentRight: 99
+          overallMatchCountLeft: 106
+          overallMatchCountRight: 106
+          overallMatchPercentLeft: 47
+          overallMatchPercentRight: 100
+          wordMarkersLeft:
+            - 0
+            - 0
+            - 0
+            - 1
+          wordMarkersRight:
+            - 0
+            - 0
+            - 0
+            - 1
     WordMarker:
       description: Indicates if word is part of copied phrase in other document.
       type: integer

@@ -84,7 +84,9 @@ public sealed class CheckForPlagiarismQueryHandler
                         OverallMatchCountLeft: pairResult.OverallMatchCountLeft,
                         OverallMatchCountRight: pairResult.OverallMatchCountRight,
                         OverallMatchPercentLeft: pairResult.OverallMatchPercentLeft,
-                        OverallMatchPercentRight: pairResult.OverallMatchPercentRight
+                        OverallMatchPercentRight: pairResult.OverallMatchPercentRight,
+                        WordMarkersLeft: pairResult.WordMarkersLeft,
+                        WordMarkersRight: pairResult.WordMarkersRight
                     );
 
                     matches.Add(match);

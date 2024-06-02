@@ -1,4 +1,6 @@
-﻿namespace PlagiarismChecker.Core.Student.Queries.CheckForPlagiarism;
+﻿using PlagiarismChecker.Domain.ValueObjects;
+
+namespace PlagiarismChecker.Core.Student.Queries.CheckForPlagiarism;
 
 public sealed record CheckForPlagiarismQueryResult(
     bool PlagiarismFound,
@@ -14,6 +16,8 @@ public sealed record CheckForPlagiarismQueryResult(
         int OverallMatchCountLeft,
         int OverallMatchCountRight,
         decimal OverallMatchPercentLeft,
-        decimal OverallMatchPercentRight
+        decimal OverallMatchPercentRight,
+        IEnumerable<WordMarker> WordMarkersLeft,
+        IEnumerable<WordMarker> WordMarkersRight
     );
 }

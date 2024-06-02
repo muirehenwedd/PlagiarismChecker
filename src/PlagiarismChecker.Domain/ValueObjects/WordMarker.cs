@@ -1,8 +1,8 @@
 ﻿namespace PlagiarismChecker.Domain.ValueObjects;
 
-public enum WordMarker
+public enum WordMarker : byte
 {
-    WordUnmatched,
-    WordPerfect,
-    WordFlaw
+    WordUnmatched = 0,
+    WordPerfect = 1,
+    WordFlaw = 2
 }

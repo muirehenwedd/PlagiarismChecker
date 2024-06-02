@@ -24,17 +24,12 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
       <PackageReference Include="System.Interactive.Async" Version="6.0.1" />
-      <PackageReference Include="System.IO.Abstractions" Version="21.0.2" />
 
 
 
 
 
 
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Common\Services\Models\" />
     </ItemGroup>
 
 

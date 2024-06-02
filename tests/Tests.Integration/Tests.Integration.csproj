@@ -17,6 +17,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.4" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+        <PackageReference Include="NSubstitute" Version="5.1.0" />
         <PackageReference Include="Testcontainers" Version="3.8.0" />
         <PackageReference Include="Testcontainers.Azurite" Version="3.8.0" />
         <PackageReference Include="Testcontainers.PostgreSql" Version="3.8.0" />

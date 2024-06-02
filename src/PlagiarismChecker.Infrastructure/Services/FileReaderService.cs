@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net.Mime;
 using System.Text;
-using PlagiarismChecker.Core.Common.Services;
+using PlagiarismChecker.Core.Services;
 
 namespace PlagiarismChecker.Infrastructure.Services;
 

@@ -17,7 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<UserId>
     }
 
     public virtual DbSet<BaseFile> BaseFiles => Set<BaseFile>();
-    public virtual DbSet<Assignment> StudentAssignments => Set<Assignment>();
+    public virtual DbSet<Assignment> Assignments => Set<Assignment>();
     public virtual DbSet<AssignmentFile> AssignmentFiles => Set<AssignmentFile>();
     public virtual DbSet<Document> Documents => Set<Document>();
 

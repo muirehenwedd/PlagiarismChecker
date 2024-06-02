@@ -5,8 +5,8 @@ using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PlagiarismChecker.Core.Abstractions.Storage;
-using PlagiarismChecker.Core.Common.Services;
 using PlagiarismChecker.Core.Mappers;
+using PlagiarismChecker.Core.Services;
 using PlagiarismChecker.Core.Student.DTOs;
 using PlagiarismChecker.Core.Student.Exceptions;
 using PlagiarismChecker.Core.Student.Options;
@@ -39,7 +39,7 @@ public sealed class UploadAssignmentFileCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var assignment = await _dbContext.StudentAssignments
+        var assignment = await _dbContext.Assignments
             .FirstOrDefaultAsync(a => a.Id == command.AssignmentId, cancellationToken);
 
         if (assignment is null)

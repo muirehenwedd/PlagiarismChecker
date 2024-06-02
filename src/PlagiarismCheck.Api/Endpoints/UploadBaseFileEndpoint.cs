@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
-using PlagiarismChecker.Core.Admin.Commands.UploadTrustedFile;
+using PlagiarismChecker.Core.Admin.Commands.UploadBaseFile;
 
 namespace PlagiarismCheck.Api.Endpoints;
 

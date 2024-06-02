@@ -5,7 +5,7 @@ using System.Net.Mime;
 using FluentAssertions;
 using Mediator;
 using Microsoft.Extensions.DependencyInjection;
-using PlagiarismChecker.Core.Admin.Commands.UploadTrustedFile;
+using PlagiarismChecker.Core.Admin.Commands.UploadBaseFile;
 
 namespace Tests.Integration.EndpointTests;
 
@@ -33,7 +33,7 @@ public class StudentEndpointsTest : IClassFixture<ApiFactory>
 
         var testUserJwt = loginResponse.Content.ReadFromJsonAsync<LoginResult>().Result!.AccessToken;
 
-        _client.DefaultRequestHeaders.Add("Authorization", testUserJwt);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", testUserJwt);
 
         // add some base files.
 

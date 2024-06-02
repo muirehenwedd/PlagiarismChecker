@@ -3,7 +3,7 @@ using EntityFrameworkCore.Testing.NSubstitute;
 using EntityFrameworkCore.Testing.NSubstitute.Extensions;
 using FluentAssertions;
 using NSubstitute;
-using PlagiarismChecker.Core.Admin.Queries.GetAllTrustedFiles;
+using PlagiarismChecker.Core.Admin.Queries.GetAllBaseFiles;
 using PlagiarismChecker.Domain.Entities;
 using PlagiarismChecker.Domain.Repository;
 using PlagiarismChecker.Infrastructure.Data;

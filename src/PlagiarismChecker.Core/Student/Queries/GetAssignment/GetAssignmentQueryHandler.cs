@@ -25,7 +25,7 @@ public sealed class GetAssignmentQueryHandler : IQueryHandler<GetAssignmentQuery
     )
     {
         var assignment = await _dbContext
-            .StudentAssignments
+            .Assignments
             .AsNoTracking()
             .Include(a => a.AssignmentFiles)
             .FirstOrDefaultAsync(a => a.Id == query.AssignmentId, cancellationToken);

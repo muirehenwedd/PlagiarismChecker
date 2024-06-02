@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using PlagiarismChecker.Core.Common.Services;
 using PlagiarismChecker.Core.Options;
+using PlagiarismChecker.Core.Services;
 using PlagiarismChecker.Infrastructure.Options;
 
 namespace PlagiarismChecker.Infrastructure.Services;

@@ -3,7 +3,7 @@ using EntityFrameworkCore.Testing.NSubstitute;
 using FluentAssertions;
 using NSubstitute;
 using PlagiarismChecker.Core.Abstractions.Storage;
-using PlagiarismChecker.Core.Admin.Commands.DeleteTrustedFileById;
+using PlagiarismChecker.Core.Admin.Commands.DeleteBaseFileById;
 using PlagiarismChecker.Core.Admin.Exceptions;
 using PlagiarismChecker.Domain.Entities;
 using PlagiarismChecker.Domain.Repository;

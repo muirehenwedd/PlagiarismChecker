@@ -1,4 +1,4 @@
-﻿namespace PlagiarismChecker.Core.Common.Services;
+﻿namespace PlagiarismChecker.Core.Services;
 
 public interface IFileReaderService
 {

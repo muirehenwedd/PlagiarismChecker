@@ -1,6 +1,6 @@
 ﻿using Mediator;
 
-namespace PlagiarismChecker.Core.Admin.Queries.GetAllTrustedFiles;
+namespace PlagiarismChecker.Core.Admin.Queries.GetAllBaseFiles;
 
 public sealed record GetAllBaseFilesQuery : IQuery<GetAllBaseFilesQueryResult>
 {

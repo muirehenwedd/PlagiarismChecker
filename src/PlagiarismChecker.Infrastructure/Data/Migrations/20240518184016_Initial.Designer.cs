@@ -235,7 +235,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("PlagiarismChecker.Domain.Entities.StudentAssignment", b =>
+            modelBuilder.Entity("PlagiarismChecker.Domain.Entities.Assignment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,7 +255,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("StudentAssignments");
+                    b.ToTable("Assignments");
                 });
 
             modelBuilder.Entity("PlagiarismChecker.Domain.Entities.User", b =>
@@ -376,7 +376,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("PlagiarismChecker.Domain.Entities.AssignmentFile", b =>
                 {
-                    b.HasOne("PlagiarismChecker.Domain.Entities.StudentAssignment", "Assignment")
+                    b.HasOne("PlagiarismChecker.Domain.Entities.Assignment", "Assignment")
                         .WithMany("AssignmentFiles")
                         .HasForeignKey("AssignmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,7 +404,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                     b.Navigation("Document");
                 });
 
-            modelBuilder.Entity("PlagiarismChecker.Domain.Entities.StudentAssignment", b =>
+            modelBuilder.Entity("PlagiarismChecker.Domain.Entities.Assignment", b =>
                 {
                     b.HasOne("PlagiarismChecker.Domain.Entities.User", "Owner")
                         .WithMany()
@@ -415,7 +415,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("PlagiarismChecker.Domain.Entities.StudentAssignment", b =>
+            modelBuilder.Entity("PlagiarismChecker.Domain.Entities.Assignment", b =>
                 {
                     b.Navigation("AssignmentFiles");
                 });

@@ -2,7 +2,7 @@
 
 public sealed class AssignmentFile
 {
-    public AssignmentFile()
+    private AssignmentFile()
     {
     }
 

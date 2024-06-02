@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - OpenApi/openapi.yaml
 permissions:
   contents: write
 jobs:

@@ -21,7 +21,7 @@ public sealed class DeleteAssignmentFileCommandHandler : ICommandHandler<DeleteA
     public async ValueTask<Unit> Handle(DeleteAssignmentFileCommand command, CancellationToken cancellationToken)
     {
         var assignment = await _dbContext
-            .StudentAssignments
+            .Assignments
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == command.AssignmentId, cancellationToken);
 

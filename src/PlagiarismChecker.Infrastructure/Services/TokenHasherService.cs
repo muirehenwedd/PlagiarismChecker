@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using PlagiarismChecker.Core.Common.Services;
+using PlagiarismChecker.Core.Services;
 
 namespace PlagiarismChecker.Infrastructure.Services;
 

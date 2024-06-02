@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using PlagiarismChecker.Core.Student.Options;
 
-namespace PlagiarismChecker.Core.Admin.Commands.UploadTrustedFile;
+namespace PlagiarismChecker.Core.Admin.Commands.UploadBaseFile;
 
 public sealed class UploadBaseFileCommandValidator : AbstractValidator<UploadBaseFileCommand>
 {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Mediator;
 
-namespace PlagiarismChecker.Core.Common.Behaviours;
+namespace PlagiarismChecker.Core.Behaviours;
 
 public sealed class ValidationBehaviour<TMessage, TResponse> : IPipelineBehavior<TMessage, TResponse>
     where TMessage : IMessage

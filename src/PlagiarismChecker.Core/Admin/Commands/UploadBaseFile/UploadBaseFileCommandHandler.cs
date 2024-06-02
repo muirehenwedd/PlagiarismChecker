@@ -1,10 +1,10 @@
 ﻿using Mediator;
 using PlagiarismChecker.Core.Abstractions.Storage;
-using PlagiarismChecker.Core.Common.Services;
+using PlagiarismChecker.Core.Services;
 using PlagiarismChecker.Domain.Entities;
 using PlagiarismChecker.Domain.Repository;
 
-namespace PlagiarismChecker.Core.Admin.Commands.UploadTrustedFile;
+namespace PlagiarismChecker.Core.Admin.Commands.UploadBaseFile;
 
 public sealed class UploadBaseFileCommandHandler
     : ICommandHandler<UploadBaseFileCommand, UploadBaseFileCommandResult>

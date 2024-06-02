@@ -4,7 +4,7 @@ using PlagiarismChecker.Core.Abstractions.Storage;
 using PlagiarismChecker.Core.Admin.Exceptions;
 using PlagiarismChecker.Domain.Repository;
 
-namespace PlagiarismChecker.Core.Admin.Commands.DeleteTrustedFileByName;
+namespace PlagiarismChecker.Core.Admin.Commands.DeleteBaseFileByName;
 
 public sealed class DeleteBaseFileByNameCommandHandler : ICommandHandler<DeleteBaseFileByNameCommand>
 {

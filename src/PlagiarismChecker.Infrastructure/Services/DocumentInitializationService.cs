@@ -1,4 +1,4 @@
-﻿using PlagiarismChecker.Core.Common.Services;
+﻿using PlagiarismChecker.Core.Services;
 using PlagiarismChecker.Domain.Entities;
 
 namespace PlagiarismChecker.Infrastructure.Services;

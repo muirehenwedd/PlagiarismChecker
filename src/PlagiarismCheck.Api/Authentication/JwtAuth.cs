@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using PlagiarismCheck.Api.Authorization;
 using PlagiarismChecker.Infrastructure.Options;
@@ -42,11 +43,17 @@ public sealed class JwtAuth : SignInAuthenticationHandler<AuthenticationSchemeOp
         if (tokenStringValues.Count == 0)
             return AuthenticateResult.NoResult();
 
-        var tokenString = tokenStringValues[0];
+        var bearerTokenString = tokenStringValues[0];
 
-        var handler = new JwtSecurityTokenHandler();
+        if (bearerTokenString is null || !bearerTokenString.StartsWith("Bearer "))
+            return AuthenticateResult.NoResult();
 
-        var tokenValidationResult = await handler.ValidateTokenAsync(tokenString, _validationParameters);
+        var jwtTokenMemory = bearerTokenString.AsMemory()["Bearer ".Length..];
+        var jsonWebToken = new JsonWebToken(jwtTokenMemory);
+
+        var handler = new JsonWebTokenHandler();
+
+        var tokenValidationResult = await handler.ValidateTokenAsync(jsonWebToken, _validationParameters);
 
         if (!tokenValidationResult.IsValid)
             return AuthenticateResult.Fail(tokenValidationResult.Exception);
@@ -57,10 +64,10 @@ public sealed class JwtAuth : SignInAuthenticationHandler<AuthenticationSchemeOp
             !Guid.TryParse(userIdString, out _))
             return AuthenticateResult.Fail($"No '{ClaimTypes.NameIdentifier}' claim was found.");
 
-        var claims =
-            Enumerable.Repeat(new Claim(ClaimTypes.NameIdentifier, userIdString, ClaimValueTypes.String, ClaimsIssuer),
-                1);
-        var identity = new ClaimsIdentity(claims, SchemeName);
+        var nameIdentifierClaim =
+            new Claim(ClaimTypes.NameIdentifier, userIdString, ClaimValueTypes.String, ClaimsIssuer);
+
+        var identity = new ClaimsIdentity([nameIdentifierClaim], SchemeName);
         var principal = new GenericPrincipal(identity, CachedRoles);
 
         return AuthenticateResult.Success(new AuthenticationTicket(principal, SchemeName));
@@ -80,7 +87,7 @@ public sealed class JwtAuth : SignInAuthenticationHandler<AuthenticationSchemeOp
         properties.IssuedUtc = utcNow;
         properties.ExpiresUtc = expiresAt;
 
-        var handler = new JwtSecurityTokenHandler();
+        var handler = new JsonWebTokenHandler();
 
         var claims = new Dictionary<string, object>()
         {
@@ -100,11 +107,11 @@ public sealed class JwtAuth : SignInAuthenticationHandler<AuthenticationSchemeOp
             Claims = claims
         };
 
-        var jwtSecurityToken = handler.CreateJwtSecurityToken(descriptor);
+        var tokenString = handler.CreateToken(descriptor);
 
         var response = new AccessTokenResponse()
         {
-            AccessToken = handler.WriteToken(jwtSecurityToken),
+            AccessToken = tokenString,
             ExpirationTimestamp = expiresAt
         };
 

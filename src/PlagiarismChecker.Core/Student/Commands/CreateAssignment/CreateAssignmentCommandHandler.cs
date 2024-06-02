@@ -34,7 +34,7 @@ public sealed class CreateAssignmentCommandHandler
     {
         var userId = command.User.GetUserId();
 
-        var notUnique = await _dbContext.StudentAssignments
+        var notUnique = await _dbContext.Assignments
             .AnyAsync(a => a.OwnerId == userId && a.Name == command.Name, cancellationToken);
 
         if (notUnique)
@@ -42,7 +42,7 @@ public sealed class CreateAssignmentCommandHandler
 
         var assignment = Assignment.Create(command.Name, userId);
 
-        _dbContext.StudentAssignments.Add(assignment);
+        _dbContext.Assignments.Add(assignment);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 

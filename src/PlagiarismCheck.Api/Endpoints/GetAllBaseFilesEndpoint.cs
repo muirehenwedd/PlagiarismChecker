@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
-using PlagiarismChecker.Core.Admin.Queries.GetAllTrustedFiles;
+using PlagiarismChecker.Core.Admin.Queries.GetAllBaseFiles;
 
 namespace PlagiarismCheck.Api.Endpoints;
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PlagiarismChecker.Core.Admin.DTOs;
 using PlagiarismChecker.Domain.Repository;
 
-namespace PlagiarismChecker.Core.Admin.Queries.GetAllTrustedFiles;
+namespace PlagiarismChecker.Core.Admin.Queries.GetAllBaseFiles;
 
 public sealed class GetAllBaseFilesQueryHandler
     : IQueryHandler<GetAllBaseFilesQuery, GetAllBaseFilesQueryResult>

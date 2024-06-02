@@ -20,7 +20,8 @@ public sealed class DeleteAssignmentCommandHandler : ICommandHandler<DeleteAssig
 
     public async ValueTask<Unit> Handle(DeleteAssignmentCommand command, CancellationToken cancellationToken)
     {
-        var assignment = await _dbContext.StudentAssignments
+        var assignment = await _dbContext
+            .Assignments
             .Include(a => a.AssignmentFiles)
             .FirstOrDefaultAsync(a => a.Id == command.AssignmentId, cancellationToken);
 
@@ -36,7 +37,8 @@ public sealed class DeleteAssignmentCommandHandler : ICommandHandler<DeleteAssig
         }
 
         _dbContext.AssignmentFiles.RemoveRange(assignment.AssignmentFiles);
-        _dbContext.StudentAssignments.Remove(assignment);
+        
+        _dbContext.Assignments.Remove(assignment);
 
         await _dbContext.SaveChangesAsync(CancellationToken.None);
 

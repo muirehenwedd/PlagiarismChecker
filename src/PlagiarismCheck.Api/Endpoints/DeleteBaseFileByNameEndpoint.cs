@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlagiarismCheck.Api.Authorization.Policies;
 using PlagiarismCheck.Api.Endpoints.Abstractions;
-using PlagiarismChecker.Core.Admin.Commands.DeleteTrustedFileByName;
+using PlagiarismChecker.Core.Admin.Commands.DeleteBaseFileByName;
 
 namespace PlagiarismCheck.Api.Endpoints;
 

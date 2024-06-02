@@ -3,7 +3,6 @@ using PlagiarismChecker.Domain.Repository;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PlagiarismChecker.Core.Common.Services;
 using PlagiarismChecker.Core.Options;
 using PlagiarismChecker.Core.Student.Exceptions;
 using PlagiarismChecker.Domain.ValueObjects;
@@ -32,7 +31,7 @@ public sealed class CheckForPlagiarismQueryHandler
     {
         var userId = query.User.GetUserId();
 
-        var assignment = await _dbContext.StudentAssignments
+        var assignment = await _dbContext.Assignments
             .AsNoTracking()
             .Include(a => a.AssignmentFiles)
             .ThenInclude(file => file.Document)

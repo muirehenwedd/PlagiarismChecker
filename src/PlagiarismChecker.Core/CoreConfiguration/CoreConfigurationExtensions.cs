@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Mediator;
 using Microsoft.Extensions.DependencyInjection;
-using PlagiarismChecker.Core.Admin.Commands.UploadTrustedFile;
-using PlagiarismChecker.Core.Common.Behaviours;
+using PlagiarismChecker.Core.Admin.Commands.UploadBaseFile;
+using PlagiarismChecker.Core.Behaviours;
 using PlagiarismChecker.Core.Student.Commands.CreateAssignment;
 using PlagiarismChecker.Core.Student.Commands.UploadAssignmentFile;
 

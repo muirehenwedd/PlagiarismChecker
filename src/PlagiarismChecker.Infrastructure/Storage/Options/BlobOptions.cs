@@ -7,4 +7,5 @@ public sealed class BlobOptions : IBindableOptions
     public static string SectionPath => "BlobStorage";
 
     public string ContainerName { get; set; }
+    public string ServiceUri { get; set; }
 }

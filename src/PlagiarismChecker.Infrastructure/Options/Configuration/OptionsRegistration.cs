@@ -22,9 +22,11 @@ public static class OptionsRegistration
         services.BindOptionsModel<JwtOptions, JwtOptionsValidator>(configuration);
         services.BindOptionsModel<AuthOptions, AuthOptionsValidator>(configuration);
         services.BindOptionsModel<PlagiarismCheckOptions, PlagiarismCheckOptionsValidator>(configuration);
-        services.BindOptionsModel<BlobOptions, BlobOptionsValidator>(configuration);
         services.BindOptionsModel<AllowedMediaTypesOptions, AllowedMediaTypesOptionsValidator>(configuration);
         services.BindOptionsModel<ConnectionStringsOptions, ConnectionStringsOptionsValidator>(configuration);
+
+        services.BindOptionsModel<BlobOptions, BlobOptionsValidator>(configuration).Configure(
+            (BlobOptions options, IConfiguration conf) => options.ServiceUri = conf["services:blobstorage:http:0"]!);
 
         return services;
     }

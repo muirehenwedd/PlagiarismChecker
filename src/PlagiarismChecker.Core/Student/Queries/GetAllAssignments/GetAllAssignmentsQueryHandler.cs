@@ -26,7 +26,7 @@ public sealed class GetAllAssignmentsQueryHandler : IQueryHandler<GetAllAssignme
         var userId = query.User.GetUserId();
 
         var assignment = await _dbContext
-            .StudentAssignments
+            .Assignments
             .AsNoTracking()
             .Include(a => a.AssignmentFiles)
             .Where(a => a.OwnerId == userId)

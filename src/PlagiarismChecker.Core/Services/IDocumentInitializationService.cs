@@ -1,6 +1,6 @@
 ﻿using PlagiarismChecker.Domain.Entities;
 
-namespace PlagiarismChecker.Core.Common.Services;
+namespace PlagiarismChecker.Core.Services;
 
 public interface IDocumentInitializationService
 {

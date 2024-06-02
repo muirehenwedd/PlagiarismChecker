@@ -174,7 +174,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentAssignments",
+                name: "Assignments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -184,9 +184,9 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentAssignments", x => x.Id);
+                    table.PrimaryKey("PK_Assignments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentAssignments_AspNetUsers_OwnerId",
+                        name: "FK_Assignments_AspNetUsers_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -233,9 +233,9 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AssignmentFiles_StudentAssignments_AssignmentId",
+                        name: "FK_AssignmentFiles_Assignments_AssignmentId",
                         column: x => x.AssignmentId,
-                        principalTable: "StudentAssignments",
+                        principalTable: "Assignments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -293,8 +293,8 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                 column: "DocumentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentAssignments_OwnerId",
-                table: "StudentAssignments",
+                name: "IX_Assignments_OwnerId",
+                table: "Assignments",
                 column: "OwnerId");
         }
 
@@ -326,7 +326,7 @@ namespace PlagiarismChecker.Infrastructure.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "StudentAssignments");
+                name: "Assignments");
 
             migrationBuilder.DropTable(
                 name: "Documents");

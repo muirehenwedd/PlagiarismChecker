@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using NSubstitute;
 using PlagiarismChecker.Infrastructure.Data;
 using PlagiarismCheck.Api;
+using PlagiarismChecker.Infrastructure.Storage;
 using Testcontainers.Azurite;
 using Testcontainers.PostgreSql;
 using Xunit.Abstractions;
@@ -29,6 +33,16 @@ public sealed class ApiFactory : WebApplicationFactory<IApiMarker>, IAsyncLifeti
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        builder.ConfigureTestServices(services =>
+        {
+            services.RemoveAll(typeof(IBlobStorageConnectionStringBuilder));
+
+            var substitute = Substitute.For<IBlobStorageConnectionStringBuilder>();
+            substitute.GetConnectionString().Returns(_blobStorageContainer.GetConnectionString());
+
+            services.AddSingleton<IBlobStorageConnectionStringBuilder>(_ => substitute);
+        });
+
         builder.ConfigureAppConfiguration((_, conf) =>
         {
             var inMemorySettings = new Dictionary<string, string?>
@@ -41,7 +55,6 @@ public sealed class ApiFactory : WebApplicationFactory<IApiMarker>, IAsyncLifeti
                 {"Auth:Jwt:Secret", new string('a', 256)},
 
                 {"ConnectionStrings:Postgres", $"{_dbContainer.GetConnectionString()};Include Error Detail=true;"},
-                {"ConnectionStrings:BlobStorage", _blobStorageContainer.GetConnectionString()},
 
                 {"BlobStorage", "files"},
                 {"AllowedMediaTypesOptions", "text/plain"},

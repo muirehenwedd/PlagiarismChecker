@@ -7,6 +7,5 @@ public sealed class ConnectionStringsOptionsValidator : AbstractValidator<Connec
     public ConnectionStringsOptionsValidator()
     {
         RuleFor(o => o.Postgres).NotEmpty();
-        RuleFor(o => o.BlobStorage).NotEmpty();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Net.Mime;
 using FluentAssertions;
 using NSubstitute;
-using PlagiarismChecker.Core.Common.Services;
+using PlagiarismChecker.Core.Services;
 using PlagiarismChecker.Infrastructure.Services;
 
 namespace Tests.Unit.PlagiarismChecker.Infrastructure.Services;

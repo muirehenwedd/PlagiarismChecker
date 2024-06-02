@@ -6,8 +6,6 @@ on:
       - master
     paths:
       - OpenApi/openapi.yaml
-permissions:
-  contents: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

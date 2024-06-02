@@ -309,6 +309,7 @@ paths:
             type: number
             minimum: 0
             maximum: 100
+            default: 80
         - in: query
           name: mismatchTolerance
           description: The maximum number of non-matches that API will allow between perfectly matching portions of a phrase.
@@ -317,13 +318,15 @@ paths:
             type: number
             minimum: 0
             maximum: 9
+            default: 2
         - in: query
           name: phraseLength
-          description: The minimum string length that WCopyfind will consider to be a match. For example, when this parameter is set to 6, WCopyfind will ignore matching phrases that are only 5 words long or less. I recommend leaving this parameter at 6 (words).
+          description: The minimum string length that API will consider to be a match. For example, when this parameter is set to 6, API will ignore matching phrases that are only 5 words long or less.
           required: false
           schema:
             type: number
             minimum: 1
+            default: 6
         - in: query
           name: wordThreshold
           description: The fewest count of matching words in a pair of documents that will cause API to report a document match in the result.
@@ -331,6 +334,7 @@ paths:
           schema:
             type: number
             minimum: 1
+            default: 6
       responses:
         '200':
           description: Success
